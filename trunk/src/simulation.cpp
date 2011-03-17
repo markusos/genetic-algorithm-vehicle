@@ -215,6 +215,7 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::selection(std::vector<V
 
 std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::crossOver(std::vector<Vehicle>& vehicles)
 {
+	
 	return vehicles;
 }
 
