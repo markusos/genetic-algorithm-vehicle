@@ -22,7 +22,7 @@ GA_VEHICLE::Vehicle::Vehicle(b2World* world, float mainPointsDistance, int nrOfW
 
 		float wheelAngle = rand()/double(RAND_MAX) * pi * 2;
 		int wheelPos = rand()%6;
-		float wheelSize = rand()/double(RAND_MAX) * 4 + 0.1;
+		float wheelSize = rand()/double(RAND_MAX) * 4 + 0.4;
 		
 		m_wheels.push_back(Wheel(wheelAngle,-5,300,wheelPos,wheelSize));
 	}
@@ -40,6 +40,7 @@ GA_VEHICLE::Vehicle::~Vehicle()
 
 void GA_VEHICLE::Vehicle::createWheel(Wheel& wheel)
 {
+	
 	//wheel
 	b2BodyDef wheelDef;
 	wheelDef.type = b2_dynamicBody;
@@ -64,7 +65,7 @@ void GA_VEHICLE::Vehicle::createWheel(Wheel& wheel)
 	wheelMountBodyDef.position.Set(x, y);
 	b2Body* wheelMountBody = m_world->CreateBody(&wheelMountBodyDef);
 	b2CircleShape wheelMountShape;
-	wheelMountShape.m_radius = 0.2f;
+	wheelMountShape.m_radius = wheel.m_wheelSize*0.7;
 	b2FixtureDef wheelMountFixtureDef;
 	wheelMountFixtureDef.shape = &wheelMountShape;
 	wheelMountFixtureDef.density = 1.0f;
@@ -75,24 +76,22 @@ void GA_VEHICLE::Vehicle::createWheel(Wheel& wheel)
 	float mountPointX = m_vehicleBody->GetPosition().x + m_vertices[wheel.m_wheelPos].m_pointDistance * cos(m_vertices[wheel.m_wheelPos].m_pointAngle);
 	float mountPointY = m_vehicleBody->GetPosition().y + m_vertices[wheel.m_wheelPos].m_pointDistance * sin(m_vertices[wheel.m_wheelPos].m_pointAngle);
 	b2Vec2 wheelSpringMountPoint = b2Vec2(mountPointX,mountPointY);
-	//b2Vec2 wheelSpringMountPoint = m_vehicleBody->GetWorldCenter();
-	//wheelSpringMountPoint += b2Vec2(3,-1);
 
-	/*b2DistanceJointDef springAndDamperJointDef;
+	b2DistanceJointDef springAndDamperJointDef;
 	springAndDamperJointDef.Initialize(m_vehicleBody, wheelMountBody, wheelSpringMountPoint, wheelMountBody->GetWorldCenter());
-	springAndDamperJointDef.collideConnected = true;
-	springAndDamperJointDef.frequencyHz = 1.0f;
-	springAndDamperJointDef.dampingRatio = 3.0f;
-	b2Joint* springAndDamperJoint = m_world->CreateJoint(&springAndDamperJointDef);*/
+	//springAndDamperJointDef.collideConnected = true;
+	springAndDamperJointDef.frequencyHz = 5.0f;
+	springAndDamperJointDef.dampingRatio = 0.5f;
+	b2Joint* springAndDamperJoint = m_world->CreateJoint(&springAndDamperJointDef);
 
 	//prismatic joint
 	b2PrismaticJointDef wheelPrismaticJointDef;
 	wheelPrismaticJointDef.Initialize(m_vehicleBody, wheelMountBody, wheelSpringMountPoint, b2Vec2( cos(wheel.m_wheelAngle), sin(wheel.m_wheelAngle)));
-	wheelPrismaticJointDef.lowerTranslation = -0.2f;
-	wheelPrismaticJointDef.upperTranslation = 0.2f;
+	wheelPrismaticJointDef.lowerTranslation = -0.4f;
+	wheelPrismaticJointDef.upperTranslation = 0.4f;
 	wheelPrismaticJointDef.enableLimit = true;
 	wheelPrismaticJointDef.enableMotor = true;
-	wheelPrismaticJointDef.maxMotorForce = 1000.0f;
+	wheelPrismaticJointDef.maxMotorForce = 10.0f;
 	wheelPrismaticJointDef.motorSpeed = 0.0f;
 	b2Joint* wheelPrismaticJoint = m_world->CreateJoint(&wheelPrismaticJointDef);
 

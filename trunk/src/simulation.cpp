@@ -156,6 +156,21 @@ void GA_VEHICLE::Simulation::initRandomPopulation()
 	Vehicle vehicle3 = Vehicle(m_world, 0, 4);
 	m_population.push_back(vehicle3);
 
+	Vehicle vehicle4 = Vehicle(m_world, 0, 4);
+	m_population.push_back(vehicle4);
+
+	Vehicle vehicle5 = Vehicle(m_world, 0, 4);
+	m_population.push_back(vehicle5);
+
+	Vehicle vehicle6 = Vehicle(m_world, 0, 4);
+	m_population.push_back(vehicle6);
+
+	Vehicle vehicle7 = Vehicle(m_world, 0, 4);
+	m_population.push_back(vehicle7);
+
+	Vehicle vehicle8 = Vehicle(m_world, 0, 4);
+	m_population.push_back(vehicle8);
+
 	std::vector<VehicleVertex> vertices;
 	vertices.push_back(VehicleVertex(0,5,0));
 	vertices.push_back(VehicleVertex(0,7,pi/4));
