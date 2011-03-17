@@ -30,7 +30,7 @@ namespace GA_VEHICLE
 		double m_timeStep;
 		bool m_render;
 		int m_stepsPerRenderFrame;
-		b2Body* m_body;
+		//b2Body* m_body;
 		std::vector<Vehicle> m_population;
 		int m_currentVehicle;
 		int m_generationCounter;
