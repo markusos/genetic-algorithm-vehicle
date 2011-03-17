@@ -102,7 +102,7 @@ void GA_VEHICLE::Simulation::mainLoop()
 			m_population[m_currentVehicle].addToWorld();
 			//Init evaluateVehicleAbortCondition variables
 			oldPosX = m_population[m_currentVehicle].m_vehicleBody->GetPosition().x;
-			oldTime = 0;
+			oldTime = glfwGetTime();
 		}
 
 		if(stepPhysics()) // physics "stepped"
@@ -121,7 +121,7 @@ void GA_VEHICLE::Simulation::mainLoop()
 					m_population[m_currentVehicle].addToWorld();
 					//Init evaluateVehicleAbortCondition variables
 					oldPosX = m_population[m_currentVehicle].m_vehicleBody->GetPosition().x;
-					oldTime = 0;
+					oldTime = glfwGetTime();
 				}
 			}
 			glfwSwapBuffers();// otherwise keyboard etc wont work..
@@ -171,16 +171,16 @@ void GA_VEHICLE::Simulation::initRandomPopulation()
 
 	std::vector<VehicleVertex> vertices2;
 	vertices2.push_back(VehicleVertex(0,5,0));
-	vertices2.push_back(VehicleVertex(0,7,pi/4));
-	vertices2.push_back(VehicleVertex(0,3,pi/2));
-	vertices2.push_back(VehicleVertex(0,7,3*pi/4));
+	vertices2.push_back(VehicleVertex(0,3,pi/4));
+	vertices2.push_back(VehicleVertex(0,5,pi/2));
+	vertices2.push_back(VehicleVertex(0,3,3*pi/4));
 	vertices2.push_back(VehicleVertex(0,5,pi));
 	vertices2.push_back(VehicleVertex(0,1,-pi/2));
 	std::vector<Wheel> wheels2;
 	wheels2.push_back(Wheel(-pi/4,-5,300,0,2));
 	wheels2.push_back(Wheel(-3*pi/4,-5,300,4,2));
-	wheels2.push_back(Wheel(-pi/4,-5,300,5,1.3));
-	wheels2.push_back(Wheel(-3*pi/4,-5,300,5,1.3));
+	//wheels2.push_back(Wheel(-pi/4,-5,300,5,1.3));
+	//wheels2.push_back(Wheel(-3*pi/4,-5,300,5,1.3));
 
 	Vehicle vehicle2 = Vehicle(m_world, 0,vertices2,wheels2);
 	m_population.push_back(vehicle2);
