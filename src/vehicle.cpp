@@ -13,18 +13,8 @@ GA_VEHICLE::Vehicle::Vehicle(b2World* world, float mainPointsDistance, int nrOfW
 	for(double i = 0; i < 2*pi; i = i + pi/4)
 	{
 		float sideLength = rand()/double(RAND_MAX) * 4 + 1;
-
 		m_vertices.push_back(VehicleVertex(0,sideLength,i));
-	}
-	//m_vertices.push_back(VehicleVertex(0,2,0));
-	//m_vertices.push_back(VehicleVertex(0,2,pi/4));
-	//m_vertices.push_back(VehicleVertex(0,2,pi/2));
-	//m_vertices.push_back(VehicleVertex(0,2,3*pi/4));
-	//m_vertices.push_back(VehicleVertex(0,2,pi));
-	//m_vertices.push_back(VehicleVertex(0,2,-3*pi/4));
-	//m_vertices.push_back(VehicleVertex(0,2,-pi/2));
-	//m_vertices.push_back(VehicleVertex(0,2,-pi/4));
-	
+	}	
 
 	for(int i = 0; i < nrOfWheels; i++)
 	{
