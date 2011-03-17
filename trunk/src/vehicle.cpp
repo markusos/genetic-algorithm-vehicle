@@ -3,10 +3,37 @@
 
 GA_VEHICLE::Vehicle::Vehicle(b2World* world, float mainPointsDistance, const std::vector<VehicleVertex>& vertices, const std::vector<Wheel>& wheels) : m_world(world), m_mainPointsDistance(mainPointsDistance), 
 	m_vertices(vertices), m_wheels(wheels), m_bodys(std::vector<b2Body*>())
-{
-
-	
+{	
 }
+
+GA_VEHICLE::Vehicle::Vehicle(b2World* world, float mainPointsDistance, int nrOfWheels) : m_world(world), m_mainPointsDistance(mainPointsDistance)
+{	
+	float pi = 3.1415;
+
+	m_vertices.push_back(VehicleVertex(0,5,0));
+	m_vertices.push_back(VehicleVertex(0,7,pi/4));
+	m_vertices.push_back(VehicleVertex(0,3,pi/2));
+	m_vertices.push_back(VehicleVertex(0,7,3*pi/4));
+	m_vertices.push_back(VehicleVertex(0,5,pi));
+	m_vertices.push_back(VehicleVertex(0,1,-pi/2));
+
+	for(int i = 0; i < nrOfWheels; i++)
+	{
+
+		float wheelAngle = rand()/double(RAND_MAX) * pi * 2;
+		int wheelPos = rand()%6;
+		float wheelSize = rand()/double(RAND_MAX) * 4 + 0.1;
+		
+		m_wheels.push_back(Wheel(wheelAngle,-5,300,wheelPos,wheelSize));
+	}
+	
+	//m_wheels.push_back(Wheel(-pi/4,-5,300,0,2));
+	//m_wheels.push_back(Wheel(-3*pi/4,-5,300,4,2));
+	//m_wheels.push_back(Wheel(-pi/4,-5,300,5,1.3));
+	//m_wheels.push_back(Wheel(-3*pi/4,-5,300,5,1.3));
+}
+
+
 GA_VEHICLE::Vehicle::~Vehicle()
 {
 }

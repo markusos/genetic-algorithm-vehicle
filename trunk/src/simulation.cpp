@@ -139,7 +139,7 @@ void GA_VEHICLE::Simulation::addTests()
 	b2BodyDef groundBodyDef;
 	b2Body* groundBody = m_world->CreateBody(&groundBodyDef);
 	b2PolygonShape groundBox;
-	float groundPoints[] = {20, 20, 22, 24, 23, 24, 26, 22, 24, 25, 28, 30, 30, 28, 24, 28, 30, 30, 100};
+	float groundPoints[] = {200, 20, 22, 24, 23, 24, 26, 22, 24, 25, 28, 30, 30, 28, 24, 28, 30, 30, 100};
 	for(int i=0; i< 19-1;i++)
 	{
 		b2Vec2 box[] = {b2Vec2(i*10+30,groundPoints[i]), b2Vec2(i*10+30,groundPoints[i]-2), b2Vec2(i*10+30+10,groundPoints[i+1]-2), b2Vec2(i*10+30+10,groundPoints[i+1])};
@@ -152,6 +152,9 @@ void GA_VEHICLE::Simulation::addTests()
 void GA_VEHICLE::Simulation::initRandomPopulation()
 {
 	float pi = 3.1415;
+
+	Vehicle vehicle3 = Vehicle(m_world, 0, 4);
+	m_population.push_back(vehicle3);
 
 	std::vector<VehicleVertex> vertices;
 	vertices.push_back(VehicleVertex(0,5,0));
@@ -184,6 +187,8 @@ void GA_VEHICLE::Simulation::initRandomPopulation()
 
 	Vehicle vehicle2 = Vehicle(m_world, 0,vertices2,wheels2);
 	m_population.push_back(vehicle2);
+
+	
 
 	m_population[0].addToWorld();
 }

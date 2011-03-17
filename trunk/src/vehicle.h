@@ -37,6 +37,7 @@ public:
 	float m_fitness;
 
 	Vehicle(b2World* world, float mainPointsDistance, const std::vector<VehicleVertex>& vertices, const std::vector<Wheel>& wheels);
+	Vehicle(b2World* world, float mainPointsDistance, int nrOfWheels);
 	void addToWorld();
 	void removeFromWorld();
 	~Vehicle();
