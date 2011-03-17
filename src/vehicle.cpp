@@ -56,6 +56,7 @@ void GA_VEHICLE::Vehicle::createWheel(Wheel& wheel)
 	wheelfixtureDef.density = 1.0f;
 	wheelfixtureDef.friction = 5.0f;
 	wheelfixtureDef.restitution = 0.5f;
+	wheelfixtureDef.filter.groupIndex = -1;
 	wheelBody->CreateFixture(&wheelfixtureDef);
 	m_bodys.push_back(wheelBody);
 
@@ -69,6 +70,7 @@ void GA_VEHICLE::Vehicle::createWheel(Wheel& wheel)
 	b2FixtureDef wheelMountFixtureDef;
 	wheelMountFixtureDef.shape = &wheelMountShape;
 	wheelMountFixtureDef.density = 1.0f;
+	wheelMountFixtureDef.filter.groupIndex = -1;
 	wheelMountBody->CreateFixture(&wheelMountFixtureDef);
 	m_bodys.push_back(wheelMountBody);
 
@@ -130,6 +132,7 @@ void GA_VEHICLE::Vehicle::addToWorld()
 			b2Vec2 triangle[] = {b2Vec2(0,0), b2Vec2(x0,y0), b2Vec2(x1,y1)};
 			vehicleShape.Set(triangle,3);
 			vehicleFixtureDef.shape = &vehicleShape;
+			vehicleFixtureDef.filter.groupIndex = -1;
 			m_vehicleBody->CreateFixture(&vehicleFixtureDef);
 		}
 	}
