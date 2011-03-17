@@ -34,6 +34,9 @@ namespace GA_VEHICLE
 		std::vector<Vehicle> m_population;
 		int m_currentVehicle;
 		int m_generationCounter;
+
+		double oldTime;
+		float32 oldPosX; 
 	};
 }
 

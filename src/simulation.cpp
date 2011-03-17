@@ -31,6 +31,10 @@ GA_VEHICLE::Simulation::Simulation() : m_time(0), m_timeStep(1.0/60.0), m_render
 
 	initRandomPopulation();
 
+	//Init evaluateVehicleAbortCondition variables
+	oldPosX = m_body->GetPosition().x;
+	oldTime = 0;
+
 	glfwSetTime(0);
 	mainLoop();
 }
@@ -174,5 +178,21 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Ve
 
 bool GA_VEHICLE::Simulation::evaluateVehicleAbortCondition(Vehicle& vehicle)
 {
-	return false;
+	float32 posX = m_body->GetPosition().x;
+	double timeNow = glfwGetTime();
+
+	double allowedStandStillTime = 2;
+	float32 minMove = 10;
+
+	if ((timeNow - oldTime) > allowedStandStillTime){
+		if (abs(posX - oldPosX) < minMove) return true;
+		else{
+			oldTime = timeNow;
+			oldPosX = posX;
+			return false;
+		}
+	}
+	else{
+		return false;
+	}
 }
