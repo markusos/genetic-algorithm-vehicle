@@ -31,10 +31,6 @@ GA_VEHICLE::Simulation::Simulation() : m_time(0), m_timeStep(1.0/60.0), m_render
 
 	initRandomPopulation();
 
-	//Init evaluateVehicleAbortCondition variables
-	oldPosX = m_body->GetPosition().x;
-	oldTime = 0;
-
 	glfwSetTime(0);
 	mainLoop();
 }
@@ -103,6 +99,10 @@ void GA_VEHICLE::Simulation::mainLoop()
 			m_currentVehicle = 0;
 			m_generationCounter++;
 			m_population = mutation( crossOver( selection(m_population)));
+			m_population[m_currentVehicle].addToWorld();
+			//Init evaluateVehicleAbortCondition variables
+			oldPosX = m_population[m_currentVehicle].m_vehicleBody->GetPosition().x;
+			oldTime = 0;
 		}
 
 		if(stepPhysics()) // physics "stepped"
@@ -114,7 +114,15 @@ void GA_VEHICLE::Simulation::mainLoop()
 			if(evaluateVehicleAbortCondition(m_population[m_currentVehicle]))
 			{
 				std::cout << "abort == true, generation == "<< m_generationCounter << std::endl;
+				m_population[m_currentVehicle].removeFromWorld();
 				m_currentVehicle++;
+				if(m_currentVehicle < m_population.size())
+				{
+					m_population[m_currentVehicle].addToWorld();
+					//Init evaluateVehicleAbortCondition variables
+					oldPosX = m_population[m_currentVehicle].m_vehicleBody->GetPosition().x;
+					oldTime = 0;
+				}
 			}
 			glfwSwapBuffers();// otherwise keyboard etc wont work..
 		}
@@ -123,7 +131,7 @@ void GA_VEHICLE::Simulation::mainLoop()
 
 void GA_VEHICLE::Simulation::render()
 {
-	m_renderer->display(m_body);
+	m_renderer->display(m_population[m_currentVehicle].m_vehicleBody);
 }
 
 void GA_VEHICLE::Simulation::addTests()
@@ -144,6 +152,7 @@ void GA_VEHICLE::Simulation::addTests()
 void GA_VEHICLE::Simulation::initRandomPopulation()
 {
 	float pi = 3.1415;
+
 	std::vector<VehicleVertex> vertices;
 	vertices.push_back(VehicleVertex(0,5,0));
 	vertices.push_back(VehicleVertex(0,7,pi/4));
@@ -156,11 +165,27 @@ void GA_VEHICLE::Simulation::initRandomPopulation()
 	wheels.push_back(Wheel(-3*pi/4,-5,300,4,2));
 	wheels.push_back(Wheel(-pi/4,-5,300,5,1.3));
 	wheels.push_back(Wheel(-3*pi/4,-5,300,5,1.3));
+
 	Vehicle vehicle = Vehicle(m_world, 0,vertices,wheels);
 	m_population.push_back(vehicle);
 
-	m_body = m_population[0].m_vehicleBody;
+	std::vector<VehicleVertex> vertices2;
+	vertices2.push_back(VehicleVertex(0,5,0));
+	vertices2.push_back(VehicleVertex(0,7,pi/4));
+	vertices2.push_back(VehicleVertex(0,3,pi/2));
+	vertices2.push_back(VehicleVertex(0,7,3*pi/4));
+	vertices2.push_back(VehicleVertex(0,5,pi));
+	vertices2.push_back(VehicleVertex(0,1,-pi/2));
+	std::vector<Wheel> wheels2;
+	wheels2.push_back(Wheel(-pi/4,-5,300,0,2));
+	wheels2.push_back(Wheel(-3*pi/4,-5,300,4,2));
+	wheels2.push_back(Wheel(-pi/4,-5,300,5,1.3));
+	wheels2.push_back(Wheel(-3*pi/4,-5,300,5,1.3));
 
+	Vehicle vehicle2 = Vehicle(m_world, 0,vertices2,wheels2);
+	m_population.push_back(vehicle2);
+
+	m_population[0].addToWorld();
 }
 
 std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::selection(std::vector<Vehicle>& vehicles)
@@ -180,7 +205,7 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Ve
 
 bool GA_VEHICLE::Simulation::evaluateVehicleAbortCondition(Vehicle& vehicle)
 {
-	float32 posX = m_body->GetPosition().x;
+	float32 posX = m_population[m_currentVehicle].m_vehicleBody->GetPosition().x;
 	double timeNow = glfwGetTime();
 
 	double allowedStandStillTime = 2;

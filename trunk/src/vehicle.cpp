@@ -5,40 +5,7 @@ GA_VEHICLE::Vehicle::Vehicle(b2World* world, float mainPointsDistance, const std
 	m_vertices(vertices), m_wheels(wheels)
 {
 
-	//mainbody
-	b2BodyDef vehicleBodyDef;
-	vehicleBodyDef.type = b2_dynamicBody;
-	vehicleBodyDef.position.Set(50.0f, 35.0f);
-	m_vehicleBody = m_world->CreateBody(&vehicleBodyDef);
-
-	b2PolygonShape vehicleShape;
-	b2FixtureDef vehicleFixtureDef;
-
-	vehicleFixtureDef.density = 1.0f;
-	for(int i=0;i<m_vertices.size();i++)
-	{
-		float x0,x1,y0,y1;
-		x0 = m_vertices[i].m_pointDistance * cos(m_vertices[i].m_pointAngle);
-		x1 = m_vertices[(i+1)%m_vertices.size()].m_pointDistance * cos(m_vertices[(i+1)%m_vertices.size()].m_pointAngle);
-		y0 = m_vertices[i].m_pointDistance * sin(m_vertices[i].m_pointAngle);
-		y1 = m_vertices[(i+1)%m_vertices.size()].m_pointDistance * sin(m_vertices[(i+1)%m_vertices.size()].m_pointAngle);
-
-		std::cout << m_vehicleBody->GetWorldCenter().x <<" "<< x0 <<" " << x1<< std::endl;
-		if(x0 != x1 && y0!= y1)
-		{
-			b2Vec2 triangle[] = {b2Vec2(0,0), b2Vec2(x0,y0), b2Vec2(x1,y1)};
-			vehicleShape.Set(triangle,3);
-			vehicleFixtureDef.shape = &vehicleShape;
-			m_vehicleBody->CreateFixture(&vehicleFixtureDef);
-		}
-	}
-
-
-	//wheels
-	for(int i=0; i< m_wheels.size();i++)
-	{
-		createWheel(m_wheels[i]);
-	}
+	
 }
 GA_VEHICLE::Vehicle::~Vehicle()
 {
@@ -107,4 +74,47 @@ void GA_VEHICLE::Vehicle::createWheel(Wheel& wheel)
 	wheelJointDef.motorSpeed = wheel.m_wheelSpeed;
 	wheelJointDef.enableMotor = true;
 	b2Joint* wheelJoint = m_world->CreateJoint(&wheelJointDef);
+}
+
+void GA_VEHICLE::Vehicle::addToWorld()
+{
+	//mainbody
+	b2BodyDef vehicleBodyDef;
+	vehicleBodyDef.type = b2_dynamicBody;
+	vehicleBodyDef.position.Set(50.0f, 35.0f);
+	m_vehicleBody = m_world->CreateBody(&vehicleBodyDef);
+
+	b2PolygonShape vehicleShape;
+	b2FixtureDef vehicleFixtureDef;
+
+	vehicleFixtureDef.density = 1.0f;
+	for(int i=0;i<m_vertices.size();i++)
+	{
+		float x0,x1,y0,y1;
+		x0 = m_vertices[i].m_pointDistance * cos(m_vertices[i].m_pointAngle);
+		x1 = m_vertices[(i+1)%m_vertices.size()].m_pointDistance * cos(m_vertices[(i+1)%m_vertices.size()].m_pointAngle);
+		y0 = m_vertices[i].m_pointDistance * sin(m_vertices[i].m_pointAngle);
+		y1 = m_vertices[(i+1)%m_vertices.size()].m_pointDistance * sin(m_vertices[(i+1)%m_vertices.size()].m_pointAngle);
+
+		std::cout << m_vehicleBody->GetWorldCenter().x <<" "<< x0 <<" " << x1<< std::endl;
+		if(x0 != x1 && y0!= y1)
+		{
+			b2Vec2 triangle[] = {b2Vec2(0,0), b2Vec2(x0,y0), b2Vec2(x1,y1)};
+			vehicleShape.Set(triangle,3);
+			vehicleFixtureDef.shape = &vehicleShape;
+			m_vehicleBody->CreateFixture(&vehicleFixtureDef);
+		}
+	}
+
+
+	//wheels
+	for(int i=0; i< m_wheels.size();i++)
+	{
+		createWheel(m_wheels[i]);
+	}
+}
+
+void GA_VEHICLE::Vehicle::removeFromWorld()
+{
+	m_world->DestroyBody(m_vehicleBody);
 }
