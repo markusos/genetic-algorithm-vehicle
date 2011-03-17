@@ -115,6 +115,7 @@ void GA_VEHICLE::Simulation::mainLoop()
 			{
 				std::cout << "abort == true, generation == "<< m_generationCounter << std::endl;
 				m_population[m_currentVehicle].removeFromWorld();
+				m_population[m_currentVehicle].m_fitness = m_population[m_currentVehicle].m_vehicleBody->GetPosition().x;
 				m_currentVehicle++;
 				if(m_currentVehicle < m_population.size())
 				{
@@ -210,7 +211,34 @@ void GA_VEHICLE::Simulation::initRandomPopulation()
 
 std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::selection(std::vector<Vehicle>& vehicles)
 {
-	return vehicles;
+	//binary tournament selection
+	const int tournamentSize = 2;
+	const int toCrossOverSize = vehicles.size()/2;
+
+	std::vector<Vehicle> toCrossOver;
+
+	for(int i=0;i<toCrossOverSize;i++)
+	{
+		int aPos = rand() % vehicles.size();
+		Vehicle a = vehicles[aPos];
+		vehicles.erase(vehicles.begin()+ aPos);
+
+		int bPos = rand() % vehicles.size();
+		Vehicle b = vehicles[bPos];
+		vehicles.erase(vehicles.begin()+ bPos);
+
+		if(a.m_fitness >= b.m_fitness)
+		{
+			toCrossOver.push_back(a);
+			vehicles.push_back(b);
+		}
+		else
+		{
+			toCrossOver.push_back(b);
+			vehicles.push_back(a);
+		}
+	}
+	return toCrossOver;
 }
 
 std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::crossOver(std::vector<Vehicle>& vehicles)
