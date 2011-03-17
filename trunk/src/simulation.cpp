@@ -113,6 +113,7 @@ void GA_VEHICLE::Simulation::mainLoop()
 			}
 			if(evaluateVehicleAbortCondition(m_population[m_currentVehicle]))
 			{
+				std::cout << "abort == true, generation == "<< m_generationCounter << std::endl;
 				m_currentVehicle++;
 			}
 			glfwSwapBuffers();// otherwise keyboard etc wont work..
