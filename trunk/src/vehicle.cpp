@@ -10,27 +10,31 @@ GA_VEHICLE::Vehicle::Vehicle(b2World* world, float mainPointsDistance, int nrOfW
 {	
 	float pi = 3.1415;
 
-	m_vertices.push_back(VehicleVertex(0,5,0));
-	m_vertices.push_back(VehicleVertex(0,7,pi/4));
-	m_vertices.push_back(VehicleVertex(0,3,pi/2));
-	m_vertices.push_back(VehicleVertex(0,7,3*pi/4));
-	m_vertices.push_back(VehicleVertex(0,5,pi));
-	m_vertices.push_back(VehicleVertex(0,1,-pi/2));
+	for(double i = 0; i < 2*pi; i = i + pi/4)
+	{
+		float sideLength = rand()/double(RAND_MAX) * 4 + 1;
+
+		m_vertices.push_back(VehicleVertex(0,sideLength,i));
+	}
+	//m_vertices.push_back(VehicleVertex(0,2,0));
+	//m_vertices.push_back(VehicleVertex(0,2,pi/4));
+	//m_vertices.push_back(VehicleVertex(0,2,pi/2));
+	//m_vertices.push_back(VehicleVertex(0,2,3*pi/4));
+	//m_vertices.push_back(VehicleVertex(0,2,pi));
+	//m_vertices.push_back(VehicleVertex(0,2,-3*pi/4));
+	//m_vertices.push_back(VehicleVertex(0,2,-pi/2));
+	//m_vertices.push_back(VehicleVertex(0,2,-pi/4));
+	
 
 	for(int i = 0; i < nrOfWheels; i++)
 	{
 
 		float wheelAngle = rand()/double(RAND_MAX) * pi * 2;
-		int wheelPos = rand()%6;
+		int wheelPos = rand()%8;
 		float wheelSize = rand()/double(RAND_MAX) * 4 + 0.4;
 		
-		m_wheels.push_back(Wheel(wheelAngle,-5,300,wheelPos,wheelSize));
+		m_wheels.push_back(Wheel(wheelAngle,-5,500,wheelPos,wheelSize));
 	}
-	
-	//m_wheels.push_back(Wheel(-pi/4,-5,300,0,2));
-	//m_wheels.push_back(Wheel(-3*pi/4,-5,300,4,2));
-	//m_wheels.push_back(Wheel(-pi/4,-5,300,5,1.3));
-	//m_wheels.push_back(Wheel(-3*pi/4,-5,300,5,1.3));
 }
 
 

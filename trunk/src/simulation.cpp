@@ -228,8 +228,8 @@ bool GA_VEHICLE::Simulation::evaluateVehicleAbortCondition(Vehicle& vehicle)
 	float32 posX = m_population[m_currentVehicle].m_vehicleBody->GetPosition().x;
 	double timeNow = glfwGetTime();
 
-	double allowedStandStillTime = 2;
-	float32 minMove = 10;
+	double allowedStandStillTime = 3;
+	float32 minMove = 5;
 
 	if ((timeNow - oldTime) > allowedStandStillTime){
 		if (abs(posX - oldPosX) < minMove) return true;
