@@ -42,6 +42,7 @@ public:
 	~Vehicle();
 private:
 	void createWheel(Wheel& wheel);
+	std::vector<b2Body*> m_bodys;
 };
 
 

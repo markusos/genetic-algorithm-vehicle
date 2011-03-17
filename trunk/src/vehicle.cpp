@@ -2,7 +2,7 @@
 #include <iostream>
 
 GA_VEHICLE::Vehicle::Vehicle(b2World* world, float mainPointsDistance, const std::vector<VehicleVertex>& vertices, const std::vector<Wheel>& wheels) : m_world(world), m_mainPointsDistance(mainPointsDistance), 
-	m_vertices(vertices), m_wheels(wheels)
+	m_vertices(vertices), m_wheels(wheels), m_bodys(std::vector<b2Body*>())
 {
 
 	
@@ -29,6 +29,7 @@ void GA_VEHICLE::Vehicle::createWheel(Wheel& wheel)
 	wheelfixtureDef.friction = 5.0f;
 	wheelfixtureDef.restitution = 0.5f;
 	wheelBody->CreateFixture(&wheelfixtureDef);
+	m_bodys.push_back(wheelBody);
 
 	//mount point
 	b2BodyDef wheelMountBodyDef;
@@ -41,6 +42,7 @@ void GA_VEHICLE::Vehicle::createWheel(Wheel& wheel)
 	wheelMountFixtureDef.shape = &wheelMountShape;
 	wheelMountFixtureDef.density = 1.0f;
 	wheelMountBody->CreateFixture(&wheelMountFixtureDef);
+	m_bodys.push_back(wheelMountBody);
 
 	//spring and damper
 	float mountPointX = m_vehicleBody->GetPosition().x + m_vertices[wheel.m_wheelPos].m_pointDistance * cos(m_vertices[wheel.m_wheelPos].m_pointAngle);
@@ -105,16 +107,21 @@ void GA_VEHICLE::Vehicle::addToWorld()
 			m_vehicleBody->CreateFixture(&vehicleFixtureDef);
 		}
 	}
-
-
+	m_bodys.push_back(m_vehicleBody);
 	//wheels
 	for(int i=0; i< m_wheels.size();i++)
 	{
 		createWheel(m_wheels[i]);
 	}
+
+	
 }
 
 void GA_VEHICLE::Vehicle::removeFromWorld()
 {
-	m_world->DestroyBody(m_vehicleBody);
+	for(int i=0;i<m_bodys.size();i++)
+	{
+		m_world->DestroyBody(m_bodys[i]);
+	}
+	m_bodys.clear();
 }
