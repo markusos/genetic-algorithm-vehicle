@@ -8,9 +8,9 @@ namespace GA_VEHICLE
 	class Renderer : public b2DebugDraw
 	{
 	public:
-		Renderer(b2World* world, b2Body* body);
+		Renderer(b2World* world);
 		void reshape(int w, int h);
-		void display();
+		void display(b2Body* body);
 		void initGL();
 	protected:
 		
@@ -19,7 +19,6 @@ namespace GA_VEHICLE
 		int m_windowHeight;
 		float m_zoom;
 		b2World* m_world;
-		b2Body* m_body_to_follow;
 
 		void DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color);
 		void DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color);
