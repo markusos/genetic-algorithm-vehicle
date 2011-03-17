@@ -9,7 +9,7 @@
 
 #include <iostream>
 
-GA_VEHICLE::Renderer::Renderer(b2World* world, b2Body* body) : m_windowWidth(1024), m_windowHeight(768), m_world(world), m_body_to_follow(body), m_zoom(15)
+GA_VEHICLE::Renderer::Renderer(b2World* world) : m_windowWidth(1024), m_windowHeight(768), m_world(world), m_zoom(15)
 {
 	initGL();
 }
@@ -46,7 +46,7 @@ void GA_VEHICLE::Renderer::reshape(int w, int h)
 	
 }
 
-void GA_VEHICLE::Renderer::display() 
+void GA_VEHICLE::Renderer::display(b2Body* body) 
 { 
 	int width,height;
 	glfwGetWindowSize(&width,&height);
@@ -64,7 +64,7 @@ void GA_VEHICLE::Renderer::display()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	glTranslatef(-m_body_to_follow->GetPosition().x + m_windowWidth/(m_zoom*2),-m_body_to_follow->GetPosition().y + m_windowHeight/(m_zoom*2),0);
+	glTranslatef(-body->GetPosition().x + m_windowWidth/(m_zoom*2),-body->GetPosition().y + m_windowHeight/(m_zoom*2),0);
 	
 	m_world->DrawDebugData();
 

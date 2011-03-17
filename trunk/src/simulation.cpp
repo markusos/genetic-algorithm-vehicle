@@ -17,7 +17,7 @@ GA_VEHICLE::Simulation::Simulation() : m_time(0), m_timeStep(1.0/60.0), m_render
 
 	if(m_render)
 	{
-		m_renderer = new Renderer(m_world, m_body);
+		m_renderer = new Renderer(m_world);
 		uint32 flags = 0;
 		flags += b2DebugDraw::e_shapeBit;
 		flags += b2DebugDraw::e_jointBit;
@@ -122,7 +122,7 @@ void GA_VEHICLE::Simulation::mainLoop()
 
 void GA_VEHICLE::Simulation::render()
 {
-	m_renderer->display();
+	m_renderer->display(m_body);
 }
 
 void GA_VEHICLE::Simulation::addTests()
@@ -138,6 +138,10 @@ void GA_VEHICLE::Simulation::addTests()
 		groundBody->CreateFixture(&groundBox, 0.0f);
 	}
 
+}
+
+void GA_VEHICLE::Simulation::initRandomPopulation()
+{
 	float pi = 3.1415;
 	std::vector<VehicleVertex> vertices;
 	vertices.push_back(VehicleVertex(0,5,0));
@@ -151,13 +155,10 @@ void GA_VEHICLE::Simulation::addTests()
 	wheels.push_back(Wheel(-3*pi/4,-5,300,4,2));
 	wheels.push_back(Wheel(-pi/4,-5,300,5,1.3));
 	wheels.push_back(Wheel(-3*pi/4,-5,300,5,1.3));
-	Vehicle* vehicle = new Vehicle(m_world, 0,vertices,wheels);
+	Vehicle vehicle = Vehicle(m_world, 0,vertices,wheels);
+	m_population.push_back(vehicle);
 
-	m_body = vehicle->m_vehicleBody;
-}
-
-void GA_VEHICLE::Simulation::initRandomPopulation()
-{
+	m_body = m_population[0].m_vehicleBody;
 
 }
 
