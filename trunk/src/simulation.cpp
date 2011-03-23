@@ -261,9 +261,9 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Ve
 		std::vector<Chromosome> genome = vehicles[i].getGenome();
 		for(int j=0;j<genome.size();j++)
 		{
-			if(rand() <=mutationChance)
+			if(rand()%100 <=mutationChance)
 			{
-				if(rand() <= 0.5)
+				if(rand()%10 < 5)
 					genome[i].value += mutationFactor*2;//tmp
 				else
 					genome[i].value -= mutationFactor*2;//tmp
