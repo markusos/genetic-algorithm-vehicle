@@ -7,13 +7,13 @@
 
 GA_VEHICLE::Simulation::Simulation() : m_time(0), m_timeStep(1.0/60.0), m_render(true), m_stepsPerRenderFrame(6)
 {
-	srand(glfwGetTime());
+	srand(0);
 	b2Vec2 gravity(0.0f, -10.0f);
 	bool doSleep = true;
 	m_world = new b2World(gravity, doSleep);
 	m_currentVehicle = 0;
 	m_generationCounter = 1;
-
+	m_stepsStillForThisVehicle = 0;
 	addTests();
 
 	if(m_render)
@@ -100,7 +100,8 @@ void GA_VEHICLE::Simulation::mainLoop()
 			m_population[m_currentVehicle].addToWorld();
 			//Init evaluateVehicleAbortCondition variables
 			oldPosX = m_population[m_currentVehicle].m_vehicleBody->GetPosition().x;
-			oldTime = glfwGetTime();
+			//oldTime = glfwGetTime();
+			m_stepsStillForThisVehicle = 0;
 		}
 
 		if(stepPhysics()) // physics "stepped"
@@ -120,7 +121,8 @@ void GA_VEHICLE::Simulation::mainLoop()
 					m_population[m_currentVehicle].addToWorld();
 					//Init evaluateVehicleAbortCondition variables
 					oldPosX = m_population[m_currentVehicle].m_vehicleBody->GetPosition().x;
-					oldTime = glfwGetTime();
+					//oldTime = glfwGetTime();
+					m_stepsStillForThisVehicle = 0;
 				}
 			}
 			glfwSwapBuffers();// otherwise keyboard etc wont work..
@@ -234,7 +236,7 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::crossOver(std::vector<V
 		std::vector<Chromosome> b = vehicles[(i+1)%vehicles.size()].getGenome();
 		if (a.size() == b.size())
 		{
-			int split = rand()%a.size();
+			int split = rand()%(a.size()-1)+1;
 			for (int j = 0; j < a.size(); j++)
 			{
 				if (j >= split)
@@ -264,9 +266,9 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Ve
 			if(rand()%100 <=mutationChance)
 			{
 				if(rand()%10 < 5)
-					genome[i].value += mutationFactor*2;//tmp
+					genome[j].value += mutationFactor*2;//tmp
 				else
-					genome[i].value -= mutationFactor*2;//tmp
+					genome[j].value -= mutationFactor*2;//tmp
 			}
 		}
 		newVehicles.push_back(Vehicle(m_world,genome));
@@ -277,15 +279,23 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Ve
 bool GA_VEHICLE::Simulation::evaluateVehicleAbortCondition(Vehicle& vehicle)
 {
 	float32 posX = m_population[m_currentVehicle].m_vehicleBody->GetPosition().x;
-	double timeNow = glfwGetTime();
+	m_stepsStillForThisVehicle++;
 
-	double allowedStandStillTime = 1.5;
+	//double timeNow = glfwGetTime();
+
+	//double allowedStandStillTime = 1.5;
+	long allowedStandStillSteps = 60; // 60/sec
 	float32 minMove = 5;
 
-	if ((timeNow - oldTime) > allowedStandStillTime){
-		if (abs(posX - oldPosX) < minMove) return true;
+	if (m_stepsStillForThisVehicle > allowedStandStillSteps){
+	//if ((timeNow - oldTime) > allowedStandStillTime){
+		if (abs(posX - oldPosX) < minMove)
+		{ 
+			return true;
+		}
 		else{
-			oldTime = timeNow;
+			//oldTime = timeNow;
+			m_stepsStillForThisVehicle = 0;
 			oldPosX = posX;
 			return false;
 		}
