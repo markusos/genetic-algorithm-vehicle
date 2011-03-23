@@ -15,7 +15,7 @@ namespace GA_VEHICLE
 		static float mutationFactor = 0.2;
 
 		static int tournamentSize = 2;
-		static int toCrossOverSize = 2;
+		static int toCrossOverSize = 10;
 
 		static int populationSize = 20;
 
