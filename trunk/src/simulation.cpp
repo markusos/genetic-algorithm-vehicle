@@ -1,5 +1,5 @@
 #include "simulation.h"
-
+#include "config.h"
 #include <GL/glfw.h>
 #include <GL/glut.h>
 
@@ -7,6 +7,7 @@
 
 GA_VEHICLE::Simulation::Simulation() : m_time(0), m_timeStep(1.0/60.0), m_render(true), m_stepsPerRenderFrame(3)
 {
+	srand(glfwGetTime());
 	b2Vec2 gravity(0.0f, -10.0f);
 	bool doSleep = true;
 	m_world = new b2World(gravity, doSleep);
@@ -41,9 +42,6 @@ GA_VEHICLE::Simulation::~Simulation()
 
 bool GA_VEHICLE::Simulation::stepPhysics()
 {
-	const int velocityIterations = 10;
-	const int positionIterations = 10;
-
 	if(m_render)
 	{
 		double currentTime = glfwGetTime();
@@ -153,7 +151,11 @@ void GA_VEHICLE::Simulation::addTests()
 void GA_VEHICLE::Simulation::initRandomPopulation()
 {
 	float pi = 3.1415;
-
+	for(int i=0;i<populationSize;i++)
+	{
+		m_population.push_back(Vehicle(m_world, 0, 4));
+	}
+	/*
 	Vehicle vehicle3 = Vehicle(m_world, 0, 4);
 	m_population.push_back(vehicle3);
 
@@ -170,8 +172,8 @@ void GA_VEHICLE::Simulation::initRandomPopulation()
 	m_population.push_back(vehicle7);
 
 	Vehicle vehicle8 = Vehicle(m_world, 0, 4);
-	m_population.push_back(vehicle8);
-
+	m_population.push_back(vehicle8);*/
+	/*
 	std::vector<VehicleVertex> vertices;
 	vertices.push_back(VehicleVertex(0,5,0));
 	vertices.push_back(VehicleVertex(0,7,pi/4));
@@ -205,15 +207,13 @@ void GA_VEHICLE::Simulation::initRandomPopulation()
 	m_population.push_back(vehicle2);
 
 	
-
+	*/
 	m_population[0].addToWorld();
 }
 
 std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::selection(std::vector<Vehicle>& vehicles)
 {
 	//binary tournament selection
-	const int tournamentSize = 2;
-	const int toCrossOverSize = vehicles.size()/2;
 
 	std::vector<Vehicle> toCrossOver;
 
@@ -249,6 +249,22 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::crossOver(std::vector<V
 
 std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Vehicle>& vehicles)
 {
+	std::vector<Vehicle> newVehicles;
+	for(int i=0;i<vehicles.size();i++)
+	{
+		std::vector<Chromosome> genome = vehicles[i].getGenome();
+		for(int j=0;j<genome.size();j++)
+		{
+			if(rand() <=mutationChance)
+			{
+				if(rand() <= 0.5)
+					genome[i].value += mutationFactor*2;//tmp
+				else
+					genome[i].value -= mutationFactor*2;//tmp
+			}
+		}
+		newVehicles.push_back(Vehicle(genome));
+	}
 	return vehicles;
 }
 
