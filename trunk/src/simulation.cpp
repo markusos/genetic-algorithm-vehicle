@@ -96,7 +96,7 @@ void GA_VEHICLE::Simulation::mainLoop()
 		{
 			m_currentVehicle = 0;
 			m_generationCounter++;
-			m_population = /*mutation( */crossOver( selection(m_population))/*)*/;
+			m_population = mutation( crossOver( selection(m_population)));
 			m_population[m_currentVehicle].addToWorld();
 			//Init evaluateVehicleAbortCondition variables
 			oldPosX = m_population[m_currentVehicle].m_vehicleBody->GetPosition().x;
