@@ -4,10 +4,11 @@
 #include <GL/glut.h>
 
 #include <iostream>
+#include <time.h>
 
 GA_VEHICLE::Simulation::Simulation() : m_time(0), m_timeStep(1.0/60.0), m_render(true), m_stepsPerRenderFrame(6)
 {
-	srand(0);
+	//srand(time(0));
 	b2Vec2 gravity(0.0f, -10.0f);
 	bool doSleep = true;
 	m_world = new b2World(gravity, doSleep);
