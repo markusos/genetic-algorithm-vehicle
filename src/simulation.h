@@ -36,6 +36,7 @@ namespace GA_VEHICLE
 		int m_generationCounter;
 
 		double oldTime;
+		long m_stepsStillForThisVehicle;
 		float32 oldPosX; 
 	};
 }
