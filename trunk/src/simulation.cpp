@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-GA_VEHICLE::Simulation::Simulation() : m_time(0), m_timeStep(1.0/60.0), m_render(true), m_stepsPerRenderFrame(3)
+GA_VEHICLE::Simulation::Simulation() : m_time(0), m_timeStep(1.0/60.0), m_render(true), m_stepsPerRenderFrame(6)
 {
 	srand(glfwGetTime());
 	b2Vec2 gravity(0.0f, -10.0f);
