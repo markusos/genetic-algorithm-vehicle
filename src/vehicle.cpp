@@ -161,7 +161,7 @@ void GA_VEHICLE::Vehicle::addToWorld()
 
 	b2PolygonShape vehicleShape;
 	b2FixtureDef vehicleFixtureDef;
-
+	vehicleFixtureDef.friction = 10.0f;
 	vehicleFixtureDef.density = 1.0f;
 	for(int i=0;i<m_vertices.size();i++)
 	{

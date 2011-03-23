@@ -138,8 +138,8 @@ void GA_VEHICLE::Simulation::addTests()
 	b2BodyDef groundBodyDef;
 	b2Body* groundBody = m_world->CreateBody(&groundBodyDef);
 	b2PolygonShape groundBox;
-	float groundPoints[] = {200, 20, 22, 24, 23, 24, 26, 22, 24, 25, 28, 30, 30, 28, 24, 28, 30, 30, 100};
-	for(int i=0; i< 19-1;i++)
+	float groundPoints[] = {200, 20, 22, 24, 23, 24, 26, 22, 24, 25, 28, 30, 30, 28, 24, 28, 30, 30, 24, 28, 33, 35, 38, 40, 20, 24, 24, 24, 24, 100};
+	for(int i=0; i< 30-1;i++)
 	{
 		b2Vec2 box[] = {b2Vec2(i*10+30,groundPoints[i]), b2Vec2(i*10+30,groundPoints[i]-2), b2Vec2(i*10+30+10,groundPoints[i+1]-2), b2Vec2(i*10+30+10,groundPoints[i+1])};
 		groundBox.Set(box,4);
