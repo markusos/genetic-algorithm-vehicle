@@ -89,7 +89,6 @@ void GA_VEHICLE::Vehicle::createWheel(Wheel& wheel)
 	//wheel
 	b2BodyDef wheelDef;
 	wheelDef.type = b2_dynamicBody;
-	std::cout << m_vehicleBody->GetPosition().x << " " << m_vehicleBody->GetPosition().y <<  std::endl;
 	float x = m_vehicleBody->GetPosition().x + (m_vertices[wheel.m_wheelPos].m_pointDistance) * cos(m_vertices[wheel.m_wheelPos].m_pointAngle) + wheel.m_wheelSize * 1.5f * cos(wheel.m_wheelAngle);
 	float y = m_vehicleBody->GetPosition().y + (m_vertices[wheel.m_wheelPos].m_pointDistance) * sin(m_vertices[wheel.m_wheelPos].m_pointAngle) + wheel.m_wheelSize * 1.5f * sin(wheel.m_wheelAngle);
 	wheelDef.position.Set(x, y);
@@ -171,7 +170,6 @@ void GA_VEHICLE::Vehicle::addToWorld()
 		y0 = m_vertices[i].m_pointDistance * sin(m_vertices[i].m_pointAngle);
 		y1 = m_vertices[(i+1)%m_vertices.size()].m_pointDistance * sin(m_vertices[(i+1)%m_vertices.size()].m_pointAngle);
 
-		std::cout << m_vehicleBody->GetWorldCenter().x <<" "<< x0 <<" " << x1<< std::endl;
 		if(x0 != x1 && y0!= y1)
 		{
 			b2Vec2 triangle[] = {b2Vec2(0,0), b2Vec2(x0,y0), b2Vec2(x1,y1)};
