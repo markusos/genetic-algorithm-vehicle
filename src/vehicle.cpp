@@ -27,6 +27,57 @@ GA_VEHICLE::Vehicle::Vehicle(b2World* world, float mainPointsDistance, int nrOfW
 	}
 }
 
+GA_VEHICLE::Vehicle::Vehicle(std::vector<GA_VEHICLE::Chromosome> genome)
+{
+	int nrOfvertices = 0;
+	int nrOfWheels = 0;
+	for (int i = 0; i < genome.size(); i++){
+		if (genome[i].type == Chromosome::POINTDISTANCE) nrOfvertices++;
+		if (genome[i].type == Chromosome::WHEELANGLE) nrOfWheels++;
+	}
+	
+	float pi = 3.1415;
+
+	if (nrOfvertices == 8){
+		int j = 0;
+		for(double i = 0; i < 2*pi; i = i + pi/4)
+		{
+			if(genome[j].type == Chromosome::POINTDISTANCE){
+				m_vertices.push_back(VehicleVertex(0,genome[j].value,i));
+			}
+			j++;
+		}
+		for(int i = 0; i < nrOfWheels; i++)
+		{
+			float wheelAngle = 100;
+			int wheelPos = 100;
+			float wheelSize = 100;
+
+			for(int a = 0; a < 3; a++)
+			{
+				if (genome[j].type == Chromosome::WHEELANGLE){
+					wheelAngle = genome[j].value;
+				}
+				if (genome[j].type == Chromosome::WHEELPOS){
+					wheelPos = (int)(genome[j].value + 0.0001);
+				}
+				if (genome[j].type == Chromosome::WHEELSIZE){
+					wheelSize = genome[j].value;
+				}
+				j++;
+			}
+			if (wheelAngle != 100 && wheelPos != 100 && wheelSize != 100){
+				m_wheels.push_back(Wheel(wheelAngle,-5,500,wheelPos,wheelSize));
+			}
+			else std::cout << "ERROR: Wheels not correctly defined" << std::endl;
+		}
+	}
+	else std::cout << "ERROR: To many sides on the vehicle" << std::endl;
+
+	
+	
+}
+
 
 GA_VEHICLE::Vehicle::~Vehicle()
 {
@@ -147,4 +198,31 @@ void GA_VEHICLE::Vehicle::removeFromWorld()
 		m_world->DestroyBody(m_bodys[i]);
 	}
 	m_bodys.clear();
+}
+
+std::vector<GA_VEHICLE::Chromosome> GA_VEHICLE::Vehicle::getGenome(){
+	std::vector<Chromosome> genome;
+	for (int i = 0; i < m_vertices.size(); i++){
+		Chromosome c;
+		c.value = m_vertices[i].m_pointDistance;
+		c.type = Chromosome::POINTDISTANCE;
+		genome.push_back(c);
+	}
+	for (int i = 0; i < m_wheels.size(); i++)
+	{
+		Chromosome c;
+		c.value = m_wheels[i].m_wheelAngle;
+		c.type = Chromosome::WHEELANGLE;
+		genome.push_back(c);
+
+		c.value = m_wheels[i].m_wheelPos;
+		c.type = Chromosome::WHEELPOS;
+		genome.push_back(c);
+		
+
+		c.value = m_wheels[i].m_wheelSize;
+		c.type = Chromosome::WHEELSIZE;
+		genome.push_back(c);
+	}
+	return genome;
 }
