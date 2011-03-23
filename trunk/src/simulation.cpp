@@ -243,8 +243,26 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::selection(std::vector<V
 
 std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::crossOver(std::vector<Vehicle>& vehicles)
 {
+	std::vector<Vehicle> newVehicles;
 	
-	return vehicles;
+	for (int i = 0; i < vehicles.size(); i++)
+	{
+		std::vector<GA_VEHICLE::Chromosome> a = vehicles[i].getGenome();
+		std::vector<GA_VEHICLE::Chromosome> b = vehicles[(i+1)%vehicles.size()].getGenome();
+		if (a.size() == b.size())
+		{
+			int split = rand()%a.size();
+			for (int j = 0; j < a.size(); j++)
+			{
+				if (j >= split) std::swap(a[j], b[j]);
+			}
+			newVehicles.push_back(Vehicle(a));
+			newVehicles.push_back(Vehicle(b));
+		}
+		else std::cout << "ERROR: Genomes of different size" << std::endl;
+	}
+
+	return newVehicles;
 }
 
 std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Vehicle>& vehicles)
