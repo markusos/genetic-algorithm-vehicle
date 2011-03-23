@@ -96,7 +96,7 @@ void GA_VEHICLE::Simulation::mainLoop()
 		{
 			m_currentVehicle = 0;
 			m_generationCounter++;
-			m_population = mutation( crossOver( selection(m_population)));
+			m_population = /*mutation( */crossOver( selection(m_population))/*)*/;
 			m_population[m_currentVehicle].addToWorld();
 			//Init evaluateVehicleAbortCondition variables
 			oldPosX = m_population[m_currentVehicle].m_vehicleBody->GetPosition().x;
@@ -153,26 +153,9 @@ void GA_VEHICLE::Simulation::initRandomPopulation()
 	float pi = 3.1415;
 	for(int i=0;i<populationSize;i++)
 	{
-		m_population.push_back(Vehicle(m_world, 0, 4));
+		m_population.push_back(Vehicle(m_world, 0, 2));
 	}
-	/*
-	Vehicle vehicle3 = Vehicle(m_world, 0, 4);
-	m_population.push_back(vehicle3);
-
-	Vehicle vehicle4 = Vehicle(m_world, 0, 4);
-	m_population.push_back(vehicle4);
-
-	Vehicle vehicle5 = Vehicle(m_world, 0, 4);
-	m_population.push_back(vehicle5);
-
-	Vehicle vehicle6 = Vehicle(m_world, 0, 4);
-	m_population.push_back(vehicle6);
-
-	Vehicle vehicle7 = Vehicle(m_world, 0, 4);
-	m_population.push_back(vehicle7);
-
-	Vehicle vehicle8 = Vehicle(m_world, 0, 4);
-	m_population.push_back(vehicle8);*/
+	
 	/*
 	std::vector<VehicleVertex> vertices;
 	vertices.push_back(VehicleVertex(0,5,0));
@@ -247,17 +230,22 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::crossOver(std::vector<V
 	
 	for (int i = 0; i < vehicles.size(); i++)
 	{
-		std::vector<GA_VEHICLE::Chromosome> a = vehicles[i].getGenome();
-		std::vector<GA_VEHICLE::Chromosome> b = vehicles[(i+1)%vehicles.size()].getGenome();
+		std::vector<Chromosome> a = vehicles[i].getGenome();
+		std::vector<Chromosome> b = vehicles[(i+1)%vehicles.size()].getGenome();
 		if (a.size() == b.size())
 		{
 			int split = rand()%a.size();
 			for (int j = 0; j < a.size(); j++)
 			{
-				if (j >= split) std::swap(a[j], b[j]);
+				if (j >= split)
+				{
+					Chromosome temp = a[j];
+					a[j] = b[j];
+					b[j] = temp;
+				}
 			}
-			newVehicles.push_back(Vehicle(a));
-			newVehicles.push_back(Vehicle(b));
+			newVehicles.push_back(Vehicle(m_world,a));
+			newVehicles.push_back(Vehicle(m_world,b));
 		}
 		else std::cout << "ERROR: Genomes of different size" << std::endl;
 	}
@@ -281,7 +269,7 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Ve
 					genome[i].value -= mutationFactor*2;//tmp
 			}
 		}
-		newVehicles.push_back(Vehicle(genome));
+		newVehicles.push_back(Vehicle(m_world,genome));
 	}
 	return vehicles;
 }
@@ -291,7 +279,7 @@ bool GA_VEHICLE::Simulation::evaluateVehicleAbortCondition(Vehicle& vehicle)
 	float32 posX = m_population[m_currentVehicle].m_vehicleBody->GetPosition().x;
 	double timeNow = glfwGetTime();
 
-	double allowedStandStillTime = 3;
+	double allowedStandStillTime = 1.5;
 	float32 minMove = 5;
 
 	if ((timeNow - oldTime) > allowedStandStillTime){

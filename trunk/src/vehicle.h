@@ -45,7 +45,7 @@ public:
 
 	Vehicle(b2World* world, float mainPointsDistance, const std::vector<VehicleVertex>& vertices, const std::vector<Wheel>& wheels);
 	Vehicle(b2World* world, float mainPointsDistance, int nrOfWheels);
-	Vehicle(std::vector<GA_VEHICLE::Chromosome> genome);
+	Vehicle(b2World* world, std::vector<GA_VEHICLE::Chromosome> genome);
 	void addToWorld();
 	void removeFromWorld();
 	std::vector<Chromosome> getGenome();

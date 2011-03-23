@@ -27,7 +27,7 @@ GA_VEHICLE::Vehicle::Vehicle(b2World* world, float mainPointsDistance, int nrOfW
 	}
 }
 
-GA_VEHICLE::Vehicle::Vehicle(std::vector<GA_VEHICLE::Chromosome> genome)
+GA_VEHICLE::Vehicle::Vehicle(b2World* world , std::vector<GA_VEHICLE::Chromosome> genome) : m_world(world)
 {
 	int nrOfvertices = 0;
 	int nrOfWheels = 0;
