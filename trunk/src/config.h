@@ -21,6 +21,7 @@ namespace GA_VEHICLE
 
 		static float verticeMinLength = 1; 
 		static float verticeMaxLength = 5;
+		static int verticeCount = 8;
 
 		static float wheelMinSize = 1; 
 		static float wheelMaxSize = 5;
