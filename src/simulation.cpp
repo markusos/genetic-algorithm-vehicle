@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <time.h>
+#include <cmath>
 
 GA_VEHICLE::Simulation::Simulation() : m_time(0), m_timeStep(1.0/60.0), m_render(true), m_stepsPerRenderFrame(6)
 {
@@ -253,7 +254,7 @@ void GA_VEHICLE::Simulation::initRandomPopulation()
 	m_population[0].addToWorld();
 }
 
-std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::selection(std::vector<Vehicle>& vehicles)
+std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::selection(std::vector<Vehicle> vehicles)
 {
 	//binary tournament selection
 
@@ -283,7 +284,7 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::selection(std::vector<V
 	return toCrossOver;
 }
 
-std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::crossOver(std::vector<Vehicle>& vehicles)
+std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::crossOver(std::vector<Vehicle> vehicles)
 {
 
 	std::vector<Vehicle> newVehicles;
@@ -314,7 +315,7 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::crossOver(std::vector<V
 	return newVehicles;
 }
 
-std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Vehicle>& vehicles)
+std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Vehicle> vehicles)
 {
 	std::vector<Vehicle> newVehicles;
 	for(int i=0;i<vehicles.size();i++)
@@ -324,15 +325,55 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Ve
 		{
 			if(rand()%100 <=mutationChance)
 			{
-				if(rand()%10 < 5)
-					genome[j].value += mutationFactor*2;//tmp
+				if(rand()%2 == 1)
+				{
+					if(genome[j].type == Chromosome::POINTDISTANCE)
+					{
+						genome[j].value += mutationFactor*(verticeMaxLength-verticeMinLength)*(rand()%100+1)/100.0;
+						if(genome[j].value > verticeMaxLength) genome[j].value = verticeMaxLength;
+					}
+					else if(genome[j].type == Chromosome::WHEELSIZE)
+					{
+						genome[j].value += mutationFactor*(wheelMaxSize-wheelMinSize)*(rand()%100+1)/100.0;
+						if(genome[j].value > wheelMaxSize) genome[j].value = wheelMaxSize;
+					}
+					else if(genome[j].type == Chromosome::WHEELANGLE)
+					{
+						genome[j].value += mutationFactor*(2*3.1415)*(rand()%100+1)/100.0;
+					}
+					else if(genome[j].type == Chromosome::WHEELPOS)
+					{
+						genome[j].value += std::min(mutationFactor*(verticeCount)*(rand()%100+1)/100.0,1.0);
+						if(genome[j].value >= verticeCount) genome[j].value = verticeCount-1;
+					}
+				}
 				else
-					genome[j].value -= mutationFactor*2;//tmp
+				{
+					if(genome[j].type == Chromosome::POINTDISTANCE)
+					{
+						genome[j].value -= mutationFactor*(verticeMaxLength-verticeMinLength)*(rand()%100+1)/100.0;
+						if(genome[j].value < verticeMinLength) genome[j].value = verticeMinLength;
+					}
+					else if(genome[j].type == Chromosome::WHEELSIZE)
+					{
+						genome[j].value -= mutationFactor*(wheelMaxSize-wheelMinSize)*(rand()%100+1)/100.0;
+						if(genome[j].value < wheelMinSize) genome[j].value = wheelMinSize;
+					}
+					else if(genome[j].type == Chromosome::WHEELANGLE)
+					{
+						genome[j].value -= mutationFactor*(2*3.1415)*(rand()%100+1)/100.0;
+					}
+					else if(genome[j].type == Chromosome::WHEELPOS)
+					{
+						genome[j].value -= std::min(mutationFactor*(verticeCount)*(rand()%100+1)/100.0,1.0);
+						if(genome[j].value < 0) genome[j].value = 0;
+					}
+				}
 			}
 		}
 		newVehicles.push_back(Vehicle(m_world,genome));
 	}
-	return vehicles;
+	return newVehicles;
 }
 
 bool GA_VEHICLE::Simulation::evaluateVehicleAbortCondition(Vehicle& vehicle)
