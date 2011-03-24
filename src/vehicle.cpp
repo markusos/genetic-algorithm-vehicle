@@ -97,8 +97,8 @@ void GA_VEHICLE::Vehicle::createWheel(Wheel& wheel)
 	wheelShape.m_radius = wheel.m_wheelSize;
 	b2FixtureDef wheelfixtureDef;
 	wheelfixtureDef.shape = &wheelShape;
-	wheelfixtureDef.density = 1.0f;
-	wheelfixtureDef.friction = 5.0f;
+	wheelfixtureDef.density = 0.5f;
+	wheelfixtureDef.friction = 8.0f;
 	wheelfixtureDef.restitution = 0.5f;
 	wheelfixtureDef.filter.groupIndex = -1;
 	wheelBody->CreateFixture(&wheelfixtureDef);
@@ -113,7 +113,7 @@ void GA_VEHICLE::Vehicle::createWheel(Wheel& wheel)
 	wheelMountShape.m_radius = wheel.m_wheelSize*0.7;
 	b2FixtureDef wheelMountFixtureDef;
 	wheelMountFixtureDef.shape = &wheelMountShape;
-	wheelMountFixtureDef.density = 1.0f;
+	wheelMountFixtureDef.density = 0.5f;
 	wheelMountFixtureDef.filter.groupIndex = -1;
 	wheelMountBody->CreateFixture(&wheelMountFixtureDef);
 	m_bodys.push_back(wheelMountBody);
