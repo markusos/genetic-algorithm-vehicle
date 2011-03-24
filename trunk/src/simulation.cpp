@@ -145,8 +145,60 @@ void GA_VEHICLE::Simulation::addTests()
 	b2BodyDef groundBodyDef;
 	b2Body* groundBody = m_world->CreateBody(&groundBodyDef);
 	b2PolygonShape groundBox;
-	float groundPoints[] = {200, 20, 22, 24, 23, 24, 26, 22, 24, 25, 28, 30, 30, 28, 24, 28, 30, 30, 24, 28, 33, 35, 38, 40, 20, 24, 24, 24, 24, 100};
-	for(int i=0; i< 30-1;i++)
+	std::vector<float> groundPoints;
+
+	groundPoints.push_back(100);
+	groundPoints.push_back(20);
+	groundPoints.push_back(22);
+	groundPoints.push_back(24);
+	groundPoints.push_back(23);
+	groundPoints.push_back(24);
+	groundPoints.push_back(26);
+	groundPoints.push_back(20);
+	groundPoints.push_back(24);
+	groundPoints.push_back(26);
+	groundPoints.push_back(28);
+	groundPoints.push_back(30);
+	groundPoints.push_back(30);
+	groundPoints.push_back(24);
+	groundPoints.push_back(28);
+	groundPoints.push_back(26);
+	groundPoints.push_back(30);
+	groundPoints.push_back(38);
+	groundPoints.push_back(40);
+	groundPoints.push_back(20);
+	groundPoints.push_back(18);
+	groundPoints.push_back(20);
+	groundPoints.push_back(22);
+	groundPoints.push_back(24);
+	groundPoints.push_back(28);
+	groundPoints.push_back(28);
+	groundPoints.push_back(30);
+	groundPoints.push_back(32);
+	groundPoints.push_back(22);
+	groundPoints.push_back(24);
+	groundPoints.push_back(24);
+	groundPoints.push_back(28);
+	groundPoints.push_back(10);
+	groundPoints.push_back(10);
+	groundPoints.push_back(12);
+	groundPoints.push_back(18);
+	groundPoints.push_back(22);
+	groundPoints.push_back(22);
+	groundPoints.push_back(28);
+	groundPoints.push_back(22);
+	groundPoints.push_back(28);
+	groundPoints.push_back(22);
+	groundPoints.push_back(28);
+	groundPoints.push_back(30);
+	groundPoints.push_back(32);
+	groundPoints.push_back(32);
+	groundPoints.push_back(36);
+	groundPoints.push_back(26);
+	groundPoints.push_back(200);
+
+
+	for(int i=0; i< groundPoints.size() - 1 ;i++)
 	{
 		b2Vec2 box[] = {b2Vec2(i*10+30,groundPoints[i]), b2Vec2(i*10+30,groundPoints[i]-2), b2Vec2(i*10+30+10,groundPoints[i+1]-2), b2Vec2(i*10+30+10,groundPoints[i+1])};
 		groundBox.Set(box,4);
@@ -179,7 +231,7 @@ void GA_VEHICLE::Simulation::initRandomPopulation()
 
 	Vehicle vehicle = Vehicle(m_world, 0,vertices,wheels);
 	m_population.push_back(vehicle);
-
+	
 	std::vector<VehicleVertex> vertices2;
 	vertices2.push_back(VehicleVertex(0,5,0));
 	vertices2.push_back(VehicleVertex(0,3,pi/4));
