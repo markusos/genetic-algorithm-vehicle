@@ -232,8 +232,17 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::selection(std::vector<V
 
 std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::crossOver(std::vector<Vehicle>& vehicles)
 {
+	std::cout << "precrossover" << std::endl;
+	for(int i=0;i<vehicles.size();i++)
+	{
+		for(int j=0;j < 8;j++)
+		{
+			std::cout << i<< " " << j << " "<< vehicles[i].m_vertices[j].m_pointDistance << std::endl;
+		}
+	}
+
 	std::vector<Vehicle> newVehicles;
-	
+
 	for (int i = 0; i < vehicles.size(); i++)
 	{
 		std::vector<Chromosome> a = vehicles[i].getGenome();
@@ -255,7 +264,14 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::crossOver(std::vector<V
 		}
 		else std::cout << "ERROR: Genomes of different size" << std::endl;
 	}
-
+	std::cout << "crossover" << std::endl;
+	for(int i=0;i<newVehicles.size();i++)
+	{
+		for(int j=0;j < 8;j++)
+		{
+			std::cout << i<< " " << j << " "<< newVehicles[i].m_vertices[j].m_pointDistance << std::endl;
+		}
+	}
 	return newVehicles;
 }
 
