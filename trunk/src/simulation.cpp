@@ -117,8 +117,8 @@ void GA_VEHICLE::Simulation::mainLoop()
 			if(evaluateVehicleAbortCondition(m_population[m_currentVehicle]))
 			{
 				std::cout << "abort == true, generation == "<< m_generationCounter << std::endl;
-				m_population[m_currentVehicle].removeFromWorld();
 				m_population[m_currentVehicle].m_fitness = m_population[m_currentVehicle].m_vehicleBody->GetPosition().x;
+				m_population[m_currentVehicle].removeFromWorld();
 				m_currentVehicle++;
 				if(m_currentVehicle < m_population.size())
 				{
