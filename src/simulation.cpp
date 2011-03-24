@@ -116,8 +116,9 @@ void GA_VEHICLE::Simulation::mainLoop()
 			}
 			if(evaluateVehicleAbortCondition(m_population[m_currentVehicle]))
 			{
-				std::cout << "abort == true, generation == "<< m_generationCounter << std::endl;
+				
 				m_population[m_currentVehicle].m_fitness = m_population[m_currentVehicle].m_vehicleBody->GetPosition().x;
+				std::cout << "abort == true, generation == "<< m_generationCounter <<" fitness == "<< m_population[m_currentVehicle].m_fitness<< std::endl;
 				m_population[m_currentVehicle].removeFromWorld();
 				m_currentVehicle++;
 				if(m_currentVehicle < m_population.size())
@@ -232,21 +233,14 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::selection(std::vector<V
 
 std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::crossOver(std::vector<Vehicle>& vehicles)
 {
-	std::cout << "precrossover" << std::endl;
-	for(int i=0;i<vehicles.size();i++)
-	{
-		for(int j=0;j < 8;j++)
-		{
-			std::cout << i<< " " << j << " "<< vehicles[i].m_vertices[j].m_pointDistance << std::endl;
-		}
-	}
 
 	std::vector<Vehicle> newVehicles;
 
 	for (int i = 0; i < vehicles.size(); i++)
 	{
 		std::vector<Chromosome> a = vehicles[i].getGenome();
-		std::vector<Chromosome> b = vehicles[(i+1)%vehicles.size()].getGenome();
+		std::vector<Chromosome> b = vehicles[(i+2)%vehicles.size()].getGenome();
+
 		if (a.size() == b.size())
 		{
 			int split = rand()%(a.size()-1)+1;
@@ -264,14 +258,7 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::crossOver(std::vector<V
 		}
 		else std::cout << "ERROR: Genomes of different size" << std::endl;
 	}
-	std::cout << "crossover" << std::endl;
-	for(int i=0;i<newVehicles.size();i++)
-	{
-		for(int j=0;j < 8;j++)
-		{
-			std::cout << i<< " " << j << " "<< newVehicles[i].m_vertices[j].m_pointDistance << std::endl;
-		}
-	}
+
 	return newVehicles;
 }
 
