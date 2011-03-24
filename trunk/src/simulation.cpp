@@ -280,12 +280,12 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Ve
 bool GA_VEHICLE::Simulation::evaluateVehicleAbortCondition(Vehicle& vehicle)
 {
 	float32 posX = m_population[m_currentVehicle].m_vehicleBody->GetPosition().x;
-	m_stepsStillForThisVehicle++;
+	m_stepsStillForThisVehicle += m_stepsPerRenderFrame;
 
 	//double timeNow = glfwGetTime();
 
 	//double allowedStandStillTime = 1.5;
-	long allowedStandStillSteps = 60; // 60/sec
+	long allowedStandStillSteps = 500; // 60/sec
 	float32 minMove = 5;
 
 	if (m_stepsStillForThisVehicle > allowedStandStillSteps){
