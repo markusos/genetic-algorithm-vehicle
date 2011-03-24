@@ -67,8 +67,11 @@ bool GA_VEHICLE::Simulation::stepPhysics()
 	}
 	else
 	{
-		m_world->Step(m_timeStep, velocityIterations, positionIterations);
-		m_world->ClearForces();
+		for(int i=0;i<m_stepsPerRenderFrame;i++)
+		{
+			m_world->Step(m_timeStep, velocityIterations, positionIterations);
+			m_world->ClearForces();
+		}
 		return true;
 	}
 	
