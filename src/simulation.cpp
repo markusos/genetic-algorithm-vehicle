@@ -346,6 +346,17 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Ve
 						genome[j].value += std::min(mutationFactor*(verticeCount)*(rand()%100+1)/100.0,1.0);
 						if(genome[j].value >= verticeCount) genome[j].value = verticeCount-1;
 					}
+					else if(genome[j].type == Chromosome::WHEELSPEED)
+					{
+						genome[j].value += mutationFactor*(wheelSpeedMax-wheelSpeedMin)*(rand()%100+1)/100.0;
+						if(genome[j].value > wheelSpeedMax) genome[j].value = wheelSpeedMin;
+					}
+					else if(genome[j].type == Chromosome::WHEELTORQUE)
+					{
+						genome[j].value += mutationFactor*(wheelTorqueMax-wheelTorqueMin)*(rand()%100+1)/100.0;
+						if(genome[j].value > wheelTorqueMax) genome[j].value = wheelTorqueMax;
+					}
+					
 				}
 				else
 				{
@@ -367,6 +378,16 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Ve
 					{
 						genome[j].value -= std::min(mutationFactor*(verticeCount)*(rand()%100+1)/100.0,1.0);
 						if(genome[j].value < 0) genome[j].value = 0;
+					}
+					else if(genome[j].type == Chromosome::WHEELSPEED)
+					{
+						genome[j].value -= mutationFactor*(wheelSpeedMax-wheelSpeedMin)*(rand()%100+1)/100.0;
+						if(genome[j].value < wheelSpeedMin) genome[j].value = wheelSpeedMin;
+					}
+					else if(genome[j].type == Chromosome::WHEELTORQUE)
+					{
+						genome[j].value -= mutationFactor*(wheelTorqueMax-wheelTorqueMin)*(rand()%100+1)/100.0;
+						if(genome[j].value < wheelTorqueMin) genome[j].value = wheelTorqueMin;
 					}
 				}
 			}
