@@ -20,7 +20,7 @@ GA_VEHICLE::Simulation::Simulation() : m_time(0), m_timeStep(1.0/60.0), m_render
 	m_log.open(buffer);
 
 	long seed = time(0);
-	m_log << "seed = " << seed << std::endl;
+	m_log << "Generation Median Max" << seed << std::endl;
 	//srand(seed);
 	b2Vec2 gravity(0.0f, -10.0f);
 	bool doSleep = true;
@@ -112,6 +112,17 @@ void GA_VEHICLE::Simulation::mainLoop()
 
 		if(m_currentVehicle >= m_population.size())
 		{
+			float medianFitness = 0;
+			float maxFitness = 0;
+			for(int i = 0; i < m_population.size(); i++)
+			{
+				medianFitness += m_population[i].m_fitness;
+				if(m_population[i].m_fitness > maxFitness) maxFitness = m_population[i].m_fitness;
+			}
+			medianFitness = medianFitness/m_population.size();
+			m_log << m_generationCounter << ";" << medianFitness << ";" << maxFitness << std::endl;
+			
+
 			m_currentVehicle = 0;
 			m_generationCounter++;
 			m_population = mutation( crossOver( selection(m_population)));
