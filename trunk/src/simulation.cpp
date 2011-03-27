@@ -121,6 +121,10 @@ void GA_VEHICLE::Simulation::mainLoop()
 				
 				m_population[m_currentVehicle].m_fitness = m_population[m_currentVehicle].m_vehicleBody->GetPosition().x;
 				std::cout << "abort == true, generation == "<< m_generationCounter <<" fitness == "<< m_population[m_currentVehicle].m_fitness<< std::endl;
+				////////////////////////////////////////////////////////
+				//Testkod
+				if(m_population[m_currentVehicle].m_fitness > 1200) m_currentVehicle--;
+				/////////////////////////////////////////////////////////
 				m_population[m_currentVehicle].removeFromWorld();
 				m_currentVehicle++;
 				if(m_currentVehicle < m_population.size())
@@ -149,55 +153,178 @@ void GA_VEHICLE::Simulation::addTests()
 	b2PolygonShape groundBox;
 	std::vector<float> groundPoints;
 
+	//Start
 	groundPoints.push_back(100);
 	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+
+	//smal bumps
+	groundPoints.push_back(20);
+	groundPoints.push_back(22);
+	groundPoints.push_back(20);
+	groundPoints.push_back(22);
+	groundPoints.push_back(20);
+	groundPoints.push_back(22);
+	groundPoints.push_back(20);
+
+	//smal hill
+	groundPoints.push_back(20);
 	groundPoints.push_back(22);
 	groundPoints.push_back(24);
-	groundPoints.push_back(23);
-	groundPoints.push_back(24);
 	groundPoints.push_back(26);
+	groundPoints.push_back(28);
+	groundPoints.push_back(30);
+	groundPoints.push_back(28);
+	groundPoints.push_back(26);
+	groundPoints.push_back(24);
+	groundPoints.push_back(22);
+	groundPoints.push_back(20);
+
+	//medium bumps
+	groundPoints.push_back(20);
 	groundPoints.push_back(20);
 	groundPoints.push_back(24);
-	groundPoints.push_back(26);
-	groundPoints.push_back(28);
-	groundPoints.push_back(30);
-	groundPoints.push_back(30);
+	groundPoints.push_back(20);
+	groundPoints.push_back(24);
+	groundPoints.push_back(20);
+	groundPoints.push_back(24);
+	groundPoints.push_back(20);
+
+	//Large jump
 	groundPoints.push_back(24);
 	groundPoints.push_back(28);
-	groundPoints.push_back(26);
-	groundPoints.push_back(30);
+	groundPoints.push_back(32);
 	groundPoints.push_back(38);
-	groundPoints.push_back(40);
+	groundPoints.push_back(42);
 	groundPoints.push_back(20);
-	groundPoints.push_back(18);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+
+	//U pit
+	groundPoints.push_back(20);
+	groundPoints.push_back(8);
+	groundPoints.push_back(4);
+	groundPoints.push_back(2);
+	groundPoints.push_back(4);
+	groundPoints.push_back(8);
+	groundPoints.push_back(20);
+
+	//two medium jumps
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
 	groundPoints.push_back(20);
 	groundPoints.push_back(22);
 	groundPoints.push_back(24);
-	groundPoints.push_back(28);
 	groundPoints.push_back(28);
 	groundPoints.push_back(30);
 	groundPoints.push_back(32);
+	groundPoints.push_back(34);
+	groundPoints.push_back(20);
 	groundPoints.push_back(22);
 	groundPoints.push_back(24);
-	groundPoints.push_back(24);
 	groundPoints.push_back(28);
+	groundPoints.push_back(30);
 	groundPoints.push_back(10);
 	groundPoints.push_back(10);
+
+	//Hill
 	groundPoints.push_back(12);
 	groundPoints.push_back(18);
 	groundPoints.push_back(22);
+
+	//Large bumbs
 	groundPoints.push_back(22);
 	groundPoints.push_back(28);
 	groundPoints.push_back(22);
 	groundPoints.push_back(28);
 	groundPoints.push_back(22);
+	groundPoints.push_back(28);
+	groundPoints.push_back(22);
+	groundPoints.push_back(28);
+	groundPoints.push_back(22);
+
+	//Larger bumps
 	groundPoints.push_back(28);
 	groundPoints.push_back(30);
-	groundPoints.push_back(32);
-	groundPoints.push_back(32);
 	groundPoints.push_back(36);
+	groundPoints.push_back(30);
+	groundPoints.push_back(36);
+	groundPoints.push_back(30);
+	groundPoints.push_back(36);
+	groundPoints.push_back(30);
+
+	//jump
+	groundPoints.push_back(30);
+	groundPoints.push_back(36);
+	groundPoints.push_back(42);
+	groundPoints.push_back(10);
+	groundPoints.push_back(20);
+
+	//Hill
+	groundPoints.push_back(22);
+	groundPoints.push_back(24);
 	groundPoints.push_back(26);
-	groundPoints.push_back(200);
+	groundPoints.push_back(28);
+	groundPoints.push_back(32);
+	groundPoints.push_back(38);
+	groundPoints.push_back(32);
+	groundPoints.push_back(38);
+	groundPoints.push_back(32);
+	groundPoints.push_back(26);
+	groundPoints.push_back(20);
+
+	//Double U pit
+	groundPoints.push_back(20);
+	groundPoints.push_back(8);
+	groundPoints.push_back(4);
+	groundPoints.push_back(2);
+	groundPoints.push_back(4);
+	groundPoints.push_back(8);
+	groundPoints.push_back(20);
+	groundPoints.push_back(8);
+	groundPoints.push_back(4);
+	groundPoints.push_back(2);
+	groundPoints.push_back(4);
+	groundPoints.push_back(8);
+	groundPoints.push_back(20);
+	
+	//tree jumps
+	groundPoints.push_back(20);
+	groundPoints.push_back(22);
+	groundPoints.push_back(24);
+	groundPoints.push_back(28);
+	groundPoints.push_back(30);
+	groundPoints.push_back(10);
+	groundPoints.push_back(12);
+	groundPoints.push_back(14);
+	groundPoints.push_back(18);
+	groundPoints.push_back(20);
+	groundPoints.push_back(22);
+	groundPoints.push_back(24);
+	groundPoints.push_back(28);
+	groundPoints.push_back(30);
+	groundPoints.push_back(10);
+	groundPoints.push_back(12);
+	groundPoints.push_back(14);
+	groundPoints.push_back(18);
+	groundPoints.push_back(20);
+	groundPoints.push_back(22);
+	groundPoints.push_back(24);
+	groundPoints.push_back(28);
+	groundPoints.push_back(30);
+	groundPoints.push_back(10);
+	groundPoints.push_back(14);
+	groundPoints.push_back(18);
+	groundPoints.push_back(22);
+	groundPoints.push_back(20);
+
+	//End
+	groundPoints.push_back(100);
 
 
 	for(int i=0; i< groundPoints.size() - 1 ;i++)
