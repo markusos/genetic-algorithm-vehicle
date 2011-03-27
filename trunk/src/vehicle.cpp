@@ -87,8 +87,8 @@ void GA_VEHICLE::Vehicle::createWheel(Wheel& wheel)
 	//wheel
 	b2BodyDef wheelDef;
 	wheelDef.type = b2_dynamicBody;
-	float x = m_vehicleBody->GetPosition().x + (m_vertices[wheel.m_wheelPos].m_pointDistance) * cos(m_vertices[wheel.m_wheelPos].m_pointAngle) + wheel.m_wheelSize * 1.5f * cos(wheel.m_wheelAngle);
-	float y = m_vehicleBody->GetPosition().y + (m_vertices[wheel.m_wheelPos].m_pointDistance) * sin(m_vertices[wheel.m_wheelPos].m_pointAngle) + wheel.m_wheelSize * 1.5f * sin(wheel.m_wheelAngle);
+	float x = m_vehicleBody->GetPosition().x + (m_vertices[wheel.m_wheelPos].m_pointDistance) * cos(m_vertices[wheel.m_wheelPos].m_pointAngle) + ((wheel.m_wheelSize * 1.0f+1.0f) * cos(wheel.m_wheelAngle));
+	float y = m_vehicleBody->GetPosition().y + (m_vertices[wheel.m_wheelPos].m_pointDistance) * sin(m_vertices[wheel.m_wheelPos].m_pointAngle) + ((wheel.m_wheelSize * 1.0f+1.0f) * sin(wheel.m_wheelAngle));
 	wheelDef.position.Set(x, y);
 	b2Body* wheelBody = m_world->CreateBody(&wheelDef);
 	b2CircleShape wheelShape;
