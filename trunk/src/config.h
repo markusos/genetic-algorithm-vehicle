@@ -11,7 +11,7 @@ namespace GA_VEHICLE
 		//static void LoadFromFile(std::string filename);
 		//static void standardConfig();
 
-		static int mutationChance = 5; // %
+		static int mutationChance = 3; // %
 		static float mutationFactor = 1.0;
 
 		static int tournamentSize = 2;

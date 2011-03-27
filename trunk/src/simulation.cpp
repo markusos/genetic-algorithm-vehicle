@@ -456,8 +456,34 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Ve
 		{
 			if(rand()%100 <=mutationChance)
 			{
+				if(genome[j].type == Chromosome::POINTDISTANCE)
+				{
+					genome[j].value = (verticeMaxLength-verticeMinLength)*(rand()/(float)(RAND_MAX+1))+verticeMinLength;
+				}
+				else if(genome[j].type == Chromosome::WHEELSIZE)
+				{
+					genome[j].value = (wheelMaxSize-wheelMinSize)*(rand()/(float)(RAND_MAX+1))+wheelMinSize;
+				}
+				else if(genome[j].type == Chromosome::WHEELANGLE)
+				{
+					genome[j].value = (2*b2_pi)*(rand()/(float)(RAND_MAX+1));
+				}
+				else if(genome[j].type == Chromosome::WHEELPOS)
+				{
+					genome[j].value = (verticeCount)*(rand()/(float)(RAND_MAX+1));
+				}
+				else if(genome[j].type == Chromosome::WHEELSPEED)
+				{
+					genome[j].value = (wheelSpeedMax-wheelSpeedMin)*(rand()/(float)(RAND_MAX+1))+wheelSpeedMin;
+				}
+				else if(genome[j].type == Chromosome::WHEELTORQUE)
+				{
+					genome[j].value = (wheelTorqueMax-wheelTorqueMin)*(rand()/(float)(RAND_MAX+1))+wheelTorqueMin;
+				}
+				/*
 				if(rand()%2 == 1)
 				{
+					
 					if(genome[j].type == Chromosome::POINTDISTANCE)
 					{
 						genome[j].value += mutationFactor*(verticeMaxLength-verticeMinLength)*(rand()%100+1)/100.0;
@@ -520,7 +546,7 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Ve
 						genome[j].value -= mutationFactor*(wheelTorqueMax-wheelTorqueMin)*(rand()%100+1)/100.0;
 						if(genome[j].value < wheelTorqueMin) genome[j].value = wheelTorqueMin;
 					}
-				}
+				}*/
 			}
 		}
 		newVehicles.push_back(Vehicle(m_world,genome));
