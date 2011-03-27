@@ -22,9 +22,9 @@ GA_VEHICLE::Vehicle::Vehicle(b2World* world, float mainPointsDistance, int nrOfW
 
 		float wheelAngle = rand()/(double(RAND_MAX) + 1) * b2_pi * 2;
 		int wheelPos = rand()%8;
-		float wheelSize = rand()/(double(RAND_MAX) + 1) * (wheelMaxSize - wheelMinSize)  + wheelMinSize;
-		float torque = rand()%(wheelTorqueMax - wheelTorqueMin) + wheelTorqueMin;
-		float speed = rand()%(wheelSpeedMax - wheelSpeedMin)  + wheelSpeedMin;
+		float wheelSize = rand()/(double(RAND_MAX) + 1) * (Config::get()->wheelMaxSize - Config::get()->wheelMinSize)  + Config::get()->wheelMinSize;
+		float torque = rand()%(Config::get()->wheelTorqueMax - Config::get()->wheelTorqueMin) + Config::get()->wheelTorqueMin;
+		float speed = rand()%(Config::get()->wheelSpeedMax - Config::get()->wheelSpeedMin)  + Config::get()->wheelSpeedMin;
 		
 		m_wheels.push_back(Wheel(wheelAngle,-speed,torque,wheelPos,wheelSize));
 	}

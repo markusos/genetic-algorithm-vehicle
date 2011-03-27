@@ -5,36 +5,81 @@
 
 namespace GA_VEHICLE
 {
-	//class Config
-	//{
-	//public:
-		//static void LoadFromFile(std::string filename);
-		//static void standardConfig();
+	class Config
+	{
+	private:
+		static Config* instance;
+		Config()
+		{
+			mutationChance = 3;
+			mutationFactor = 1.0;
 
-		static int mutationChance = 3; // %
-		static float mutationFactor = 1.0;
+			tournamentSize = 2;
+			toCrossOverSize = 10;
 
-		static int tournamentSize = 2;
-		static int toCrossOverSize = 10;
+			populationSize = 20;
 
-		static int populationSize = 20;
+			verticeMinLength = 0.5; 
+			verticeMaxLength = 10;
+			verticeCount = 8;
 
-		static float verticeMinLength = 0.5; 
-		static float verticeMaxLength = 10;
-		static int verticeCount = 8;
+			wheelMinSize = 1; 
+			wheelMaxSize = 3;
 
-		static float wheelMinSize = 1; 
-		static float wheelMaxSize = 3;
+			velocityIterations = 10;
+			positionIterations = 10;
 
-		static int velocityIterations = 10;
-		static int positionIterations = 10;
+			wheelTorqueMin = 50;
+			wheelTorqueMax = 1000;
 
-		static int wheelTorqueMin = 50;
-		static int wheelTorqueMax = 1000;
+			wheelSpeedMin = 2;
+			wheelSpeedMax = 10;
 
-		static int wheelSpeedMin = 2;
-		static int wheelSpeedMax = 10;
-	//};
+			allowedStandStillSteps = 500; // 60/sec
+			minMove = 5;
+		}
+	public:
+		
+		static Config* get()
+		{
+			if(!instance)
+			{
+				instance = new Config();
+			}
+			return instance;
+		}
+		void LoadFromFile(std::string filename)
+		{
+
+		}
+		int mutationChance; // %
+		float mutationFactor;
+
+		int tournamentSize;
+		int toCrossOverSize;
+
+		int populationSize;
+
+		float verticeMinLength; 
+		float verticeMaxLength;
+		int verticeCount;
+
+		float wheelMinSize; 
+		float wheelMaxSize;
+
+		int velocityIterations;
+		int positionIterations;
+
+		int wheelTorqueMin;
+		int wheelTorqueMax;
+
+		int wheelSpeedMin;
+		int wheelSpeedMax;
+		long allowedStandStillSteps; // 60/sec
+		float minMove;
+		
+	
+	};
 }
 
 #endif

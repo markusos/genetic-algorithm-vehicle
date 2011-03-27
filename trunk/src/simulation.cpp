@@ -67,7 +67,7 @@ bool GA_VEHICLE::Simulation::stepPhysics()
 			
 			for(int i=0;i<m_stepsPerRenderFrame;i++)
 			{
-				m_world->Step(m_timeStep, velocityIterations, positionIterations);
+				m_world->Step(m_timeStep, Config::get()->velocityIterations, Config::get()->positionIterations);
 				m_world->ClearForces();
 			}
 			
@@ -83,7 +83,7 @@ bool GA_VEHICLE::Simulation::stepPhysics()
 	{
 		for(int i=0;i<m_stepsPerRenderFrame;i++)
 		{
-			m_world->Step(m_timeStep, velocityIterations, positionIterations);
+			m_world->Step(m_timeStep, Config::get()->velocityIterations, Config::get()->positionIterations);
 			m_world->ClearForces();
 		}
 		return true;
@@ -361,7 +361,7 @@ void GA_VEHICLE::Simulation::addTests()
 
 void GA_VEHICLE::Simulation::initRandomPopulation()
 {
-	for(int i=0;i<populationSize;i++)
+	for(int i=0;i<Config::get()->populationSize;i++)
 	{
 		m_population.push_back(Vehicle(m_world, 0, 2));
 	}
@@ -410,10 +410,10 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::selection(std::vector<V
 
 	std::vector<Vehicle> toCrossOver;
 
-	for(int i=0;i<toCrossOverSize;i++)
+	for(int i=0;i<Config::get()->toCrossOverSize;i++)
 	{
 		std::vector<Vehicle> tournament;
-		for (int j=0;j < std::min<int>(tournamentSize, vehicles.size()); j++)
+		for (int j=0;j < std::min<int>(Config::get()->tournamentSize, vehicles.size()); j++)
 		{
 			int pos = rand() % vehicles.size();
 			tournament.push_back(vehicles[pos]);
@@ -477,15 +477,15 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Ve
 		std::vector<Chromosome> genome = vehicles[i].getGenome();
 		for(int j=0;j<genome.size();j++)
 		{
-			if(rand()%100 <=mutationChance)
+			if(rand()%100 <=Config::get()->mutationChance)
 			{
 				if(genome[j].type == Chromosome::POINTDISTANCE)
 				{
-					genome[j].value = (verticeMaxLength-verticeMinLength)*(rand()/(float)(RAND_MAX+1))+verticeMinLength;
+					genome[j].value = (Config::get()->verticeMaxLength-Config::get()->verticeMinLength)*(rand()/(float)(RAND_MAX+1))+Config::get()->verticeMinLength;
 				}
 				else if(genome[j].type == Chromosome::WHEELSIZE)
 				{
-					genome[j].value = (wheelMaxSize-wheelMinSize)*(rand()/(float)(RAND_MAX+1))+wheelMinSize;
+					genome[j].value = (Config::get()->wheelMaxSize-Config::get()->wheelMinSize)*(rand()/(float)(RAND_MAX+1))+Config::get()->wheelMinSize;
 				}
 				else if(genome[j].type == Chromosome::WHEELANGLE)
 				{
@@ -493,15 +493,15 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Ve
 				}
 				else if(genome[j].type == Chromosome::WHEELPOS)
 				{
-					genome[j].value = (verticeCount)*(rand()/(float)(RAND_MAX+1));
+					genome[j].value = (Config::get()->verticeCount)*(rand()/(float)(RAND_MAX+1));
 				}
 				else if(genome[j].type == Chromosome::WHEELSPEED)
 				{
-					genome[j].value = (wheelSpeedMax-wheelSpeedMin)*(rand()/(float)(RAND_MAX+1))+wheelSpeedMin;
+					genome[j].value = (Config::get()->wheelSpeedMax-Config::get()->wheelSpeedMin)*(rand()/(float)(RAND_MAX+1))+Config::get()->wheelSpeedMin;
 				}
 				else if(genome[j].type == Chromosome::WHEELTORQUE)
 				{
-					genome[j].value = (wheelTorqueMax-wheelTorqueMin)*(rand()/(float)(RAND_MAX+1))+wheelTorqueMin;
+					genome[j].value = (Config::get()->wheelTorqueMax-Config::get()->wheelTorqueMin)*(rand()/(float)(RAND_MAX+1))+Config::get()->wheelTorqueMin;
 				}
 				/*
 				if(rand()%2 == 1)
@@ -585,12 +585,11 @@ bool GA_VEHICLE::Simulation::evaluateVehicleAbortCondition(Vehicle& vehicle)
 	//double timeNow = glfwGetTime();
 
 	//double allowedStandStillTime = 1.5;
-	long allowedStandStillSteps = 500; // 60/sec
-	float32 minMove = 5;
 
-	if (m_stepsStillForThisVehicle > allowedStandStillSteps){
+
+	if (m_stepsStillForThisVehicle > Config::get()->allowedStandStillSteps){
 	//if ((timeNow - oldTime) > allowedStandStillTime){
-		if (abs(posX - oldPosX) < minMove)
+		if (abs(posX - oldPosX) < Config::get()->minMove)
 		{ 
 			return true;
 		}
