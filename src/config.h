@@ -2,6 +2,10 @@
 #define __CONFIG_H__
 
 #include <string>
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/uniform_int.hpp>
+#include <boost/random/variate_generator.hpp>
+#include <boost/random/uniform_01.hpp>
 
 namespace GA_VEHICLE
 {
@@ -11,6 +15,8 @@ namespace GA_VEHICLE
 	public:
 		static Config* get();
 		void LoadFromFile(std::string filename);
+		int randomInInterval(int lowerBound, int upperBound);
+		double random01();
 
 		int mutationChance; // %
 		float mutationFactor;
@@ -40,6 +46,7 @@ namespace GA_VEHICLE
 		
 	private:
 		Config();
+		boost::mt19937 gen;
 	};
 }
 

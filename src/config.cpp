@@ -1,7 +1,12 @@
 #include "config.h"
+#include <time.h>
 
 GA_VEHICLE::Config::Config()
 {
+	//unsigned int seed = time(0);
+	unsigned int seed = 0;
+	gen.seed(seed);
+
 	mutationChance = 3;
 	mutationFactor = 1.0;
 
@@ -42,4 +47,17 @@ GA_VEHICLE::Config* GA_VEHICLE::Config::get()
 void GA_VEHICLE::Config::LoadFromFile(std::string filename)
 {
 
+}
+
+int GA_VEHICLE::Config::randomInInterval(int lowerBound, int upperBound)
+{
+	boost::uniform_int<> dist(lowerBound, upperBound);
+    boost::variate_generator<boost::mt19937&, boost::uniform_int<> > die(gen, dist);
+    return die();
+}
+
+double GA_VEHICLE::Config::random01()
+{
+	static boost::uniform_01<boost::mt19937> zeroone(gen);
+	return zeroone();
 }
