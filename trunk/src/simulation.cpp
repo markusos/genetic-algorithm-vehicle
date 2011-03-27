@@ -4,8 +4,8 @@
 #include <GL/glut.h>
 
 #include <iostream>
-#include <time.h>
 #include <Box2D\Common\b2Settings.h>
+#include <time.h>
 
 GA_VEHICLE::Simulation::Simulation() : m_time(0), m_timeStep(1.0/60.0), m_render(true), m_stepsPerRenderFrame(6)
 {
@@ -19,9 +19,9 @@ GA_VEHICLE::Simulation::Simulation() : m_time(0), m_timeStep(1.0/60.0), m_render
 	strftime (buffer,80,"log_%H.%M_%d-%m-%y.log",timeinfo);
 	m_log.open(buffer);
 
-	long seed = time(0);
-	m_log << "Generation Median Max" << seed << std::endl;
-	//srand(seed);
+	
+	m_log << "Generation Median Max" << std::endl;
+	
 	b2Vec2 gravity(0.0f, -10.0f);
 	bool doSleep = true;
 	m_world = new b2World(gravity, doSleep);
