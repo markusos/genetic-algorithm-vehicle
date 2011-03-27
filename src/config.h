@@ -28,6 +28,12 @@ namespace GA_VEHICLE
 
 		static int velocityIterations = 10;
 		static int positionIterations = 10;
+
+		static int wheelTorqueMin = 50;
+		static int wheelTorqueMax = 3000;
+
+		static int wheelSpeedMin = 2;
+		static int wheelSpeedMax = 20;
 	//};
 }
 

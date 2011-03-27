@@ -1,1 +1,6 @@
- 
+ - Förlänga banan
+ - Fixa loggning
+ - Torque ska ärvas
+ - Fixa inläsning av conf
+ - Ändra hjulaxelns längd
+ - 
