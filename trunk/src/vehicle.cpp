@@ -1,4 +1,5 @@
 #include "vehicle.h"
+#include "config.h"
 #include <iostream>
 #include <Box2D\Common\b2Settings.h>
 
@@ -12,18 +13,20 @@ GA_VEHICLE::Vehicle::Vehicle(b2World* world, float mainPointsDistance, int nrOfW
 
 	for(double i = 0; i < 2*b2_pi; i = i + b2_pi/4)
 	{
-		float sideLength = rand()/double(RAND_MAX) * 4 + 1;
+		float sideLength = rand()/(double(RAND_MAX) + 1) * 4 + 1;
 		m_vertices.push_back(VehicleVertex(0,sideLength,i));
 	}	
 
 	for(int i = 0; i < nrOfWheels; i++)
 	{
 
-		float wheelAngle = rand()/double(RAND_MAX) * b2_pi * 2;
+		float wheelAngle = rand()/(double(RAND_MAX) + 1) * b2_pi * 2;
 		int wheelPos = rand()%8;
-		float wheelSize = rand()/double(RAND_MAX) * 4 + 0.4;
+		float wheelSize = rand()/(double(RAND_MAX) + 1) * (wheelMaxSize - wheelMinSize)  + wheelMinSize;
+		float torque = rand()%(wheelTorqueMax - wheelTorqueMin) + wheelTorqueMin;
+		float speed = rand()%(wheelSpeedMax - wheelSpeedMin)  + wheelSpeedMin;
 		
-		m_wheels.push_back(Wheel(wheelAngle,-5,500,wheelPos,wheelSize));
+		m_wheels.push_back(Wheel(wheelAngle,-speed,torque,wheelPos,wheelSize));
 	}
 }
 
@@ -47,25 +50,44 @@ GA_VEHICLE::Vehicle::Vehicle(b2World* world , std::vector<GA_VEHICLE::Chromosome
 		}
 		for(int i = 0; i < nrOfWheels; i++)
 		{
-			float wheelAngle = 100;
-			int wheelPos = 100;
-			float wheelSize = 100;
+			float wheelAngle;
+			int wheelPos;
+			float wheelSize;
+			float wheelTorque;
+			float wheelSpeed;
 
-			for(int a = 0; a < 3; a++)
+			bool angle = false;
+			bool pos = false;
+			bool size = false;
+			bool torque = false;
+			bool speed = false;
+
+			for(int a = 0; a < 5; a++)
 			{
 				if (genome[j].type == Chromosome::WHEELANGLE){
 					wheelAngle = genome[j].value;
+					angle = true;
 				}
 				if (genome[j].type == Chromosome::WHEELPOS){
 					wheelPos = (int)(genome[j].value + 0.0001);
+					pos = true;
 				}
 				if (genome[j].type == Chromosome::WHEELSIZE){
 					wheelSize = genome[j].value;
+					size = true;
+				}
+				if (genome[j].type == Chromosome::WHEELTORQUE){
+					wheelTorque = genome[j].value;
+					torque = true;
+				}
+				if (genome[j].type == Chromosome::WHEELSPEED){
+					wheelSpeed = genome[j].value;
+					speed = true;
 				}
 				j++;
 			}
-			if (wheelAngle != 100 && wheelPos != 100 && wheelSize != 100){
-				m_wheels.push_back(Wheel(wheelAngle,-5,500,wheelPos,wheelSize));
+			if (angle && pos && size && torque && speed){
+				m_wheels.push_back(Wheel(wheelAngle,-wheelSpeed,wheelTorque,wheelPos,wheelSize));
 			}
 			else std::cout << "ERROR: Wheels not correctly defined" << std::endl;
 		}
@@ -215,10 +237,18 @@ std::vector<GA_VEHICLE::Chromosome> GA_VEHICLE::Vehicle::getGenome(){
 		c.type = Chromosome::WHEELPOS;
 		genome.push_back(c);
 		
-
 		c.value = m_wheels[i].m_wheelSize;
 		c.type = Chromosome::WHEELSIZE;
 		genome.push_back(c);
+
+		c.value = m_wheels[i].m_wheelTorque;
+		c.type = Chromosome::WHEELTORQUE;
+		genome.push_back(c);
+
+		c.value = m_wheels[i].m_wheelSpeed;
+		c.type = Chromosome::WHEELSPEED;
+		genome.push_back(c);
+
 	}
 	return genome;
 }
