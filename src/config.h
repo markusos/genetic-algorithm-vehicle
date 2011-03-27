@@ -12,7 +12,7 @@ namespace GA_VEHICLE
 		//static void standardConfig();
 
 		static int mutationChance = 5; // %
-		static float mutationFactor = 0.2;
+		static float mutationFactor = 1.0;
 
 		static int tournamentSize = 2;
 		static int toCrossOverSize = 10;
