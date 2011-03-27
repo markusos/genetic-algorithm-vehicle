@@ -19,12 +19,12 @@ namespace GA_VEHICLE
 
 		static int populationSize = 20;
 
-		static float verticeMinLength = 1; 
-		static float verticeMaxLength = 5;
+		static float verticeMinLength = 0.5; 
+		static float verticeMaxLength = 10;
 		static int verticeCount = 8;
 
 		static float wheelMinSize = 1; 
-		static float wheelMaxSize = 5;
+		static float wheelMaxSize = 3;
 
 		static int velocityIterations = 10;
 		static int positionIterations = 10;
