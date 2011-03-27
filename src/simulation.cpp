@@ -5,10 +5,11 @@
 
 #include <iostream>
 #include <time.h>
-#include <cmath>
+#include <Box2D\Common\b2Settings.h>
 
 GA_VEHICLE::Simulation::Simulation() : m_time(0), m_timeStep(1.0/60.0), m_render(true), m_stepsPerRenderFrame(6)
 {
+	
 	//srand(time(0));
 	b2Vec2 gravity(0.0f, -10.0f);
 	bool doSleep = true;
@@ -210,7 +211,6 @@ void GA_VEHICLE::Simulation::addTests()
 
 void GA_VEHICLE::Simulation::initRandomPopulation()
 {
-	float pi = 3.1415;
 	for(int i=0;i<populationSize;i++)
 	{
 		m_population.push_back(Vehicle(m_world, 0, 2));
@@ -339,7 +339,7 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Ve
 					}
 					else if(genome[j].type == Chromosome::WHEELANGLE)
 					{
-						genome[j].value += mutationFactor*(2*3.1415)*(rand()%100+1)/100.0;
+						genome[j].value += mutationFactor*(2*b2_pi)*(rand()%100+1)/100.0;
 					}
 					else if(genome[j].type == Chromosome::WHEELPOS)
 					{
@@ -361,7 +361,7 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Ve
 					}
 					else if(genome[j].type == Chromosome::WHEELANGLE)
 					{
-						genome[j].value -= mutationFactor*(2*3.1415)*(rand()%100+1)/100.0;
+						genome[j].value -= mutationFactor*(2*b2_pi)*(rand()%100+1)/100.0;
 					}
 					else if(genome[j].type == Chromosome::WHEELPOS)
 					{

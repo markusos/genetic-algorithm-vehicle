@@ -1,5 +1,6 @@
 #include "vehicle.h"
 #include <iostream>
+#include <Box2D\Common\b2Settings.h>
 
 GA_VEHICLE::Vehicle::Vehicle(b2World* world, float mainPointsDistance, const std::vector<VehicleVertex>& vertices, const std::vector<Wheel>& wheels) : m_world(world), m_mainPointsDistance(mainPointsDistance), 
 	m_vertices(vertices), m_wheels(wheels), m_bodys(std::vector<b2Body*>())
@@ -8,9 +9,8 @@ GA_VEHICLE::Vehicle::Vehicle(b2World* world, float mainPointsDistance, const std
 
 GA_VEHICLE::Vehicle::Vehicle(b2World* world, float mainPointsDistance, int nrOfWheels) : m_world(world), m_mainPointsDistance(mainPointsDistance)
 {	
-	float pi = 3.1415;
 
-	for(double i = 0; i < 2*pi; i = i + pi/4)
+	for(double i = 0; i < 2*b2_pi; i = i + b2_pi/4)
 	{
 		float sideLength = rand()/double(RAND_MAX) * 4 + 1;
 		m_vertices.push_back(VehicleVertex(0,sideLength,i));
@@ -19,7 +19,7 @@ GA_VEHICLE::Vehicle::Vehicle(b2World* world, float mainPointsDistance, int nrOfW
 	for(int i = 0; i < nrOfWheels; i++)
 	{
 
-		float wheelAngle = rand()/double(RAND_MAX) * pi * 2;
+		float wheelAngle = rand()/double(RAND_MAX) * b2_pi * 2;
 		int wheelPos = rand()%8;
 		float wheelSize = rand()/double(RAND_MAX) * 4 + 0.4;
 		
@@ -35,12 +35,10 @@ GA_VEHICLE::Vehicle::Vehicle(b2World* world , std::vector<GA_VEHICLE::Chromosome
 		if (genome[i].type == Chromosome::POINTDISTANCE) nrOfvertices++;
 		if (genome[i].type == Chromosome::WHEELANGLE) nrOfWheels++;
 	}
-	
-	float pi = 3.1415;
 
 	if (nrOfvertices == 8){
 		int j = 0;
-		for(double i = 0; i < 2*pi; i = i + pi/4)
+		for(double i = 0; i < 2*b2_pi; i = i + b2_pi/4)
 		{
 			if(genome[j].type == Chromosome::POINTDISTANCE){
 				m_vertices.push_back(VehicleVertex(0,genome[j].value,i));
