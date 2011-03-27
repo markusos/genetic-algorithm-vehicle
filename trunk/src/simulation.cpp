@@ -123,7 +123,7 @@ void GA_VEHICLE::Simulation::mainLoop()
 				std::cout << "abort == true, generation == "<< m_generationCounter <<" fitness == "<< m_population[m_currentVehicle].m_fitness<< std::endl;
 				////////////////////////////////////////////////////////
 				//Testkod
-				if(m_population[m_currentVehicle].m_fitness > 1200) m_currentVehicle--;
+				//if(m_population[m_currentVehicle].m_fitness > 1200) m_currentVehicle--;
 				/////////////////////////////////////////////////////////
 				m_population[m_currentVehicle].removeFromWorld();
 				m_currentVehicle++;
