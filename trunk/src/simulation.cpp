@@ -262,23 +262,27 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::selection(std::vector<V
 
 	for(int i=0;i<toCrossOverSize;i++)
 	{
-		int aPos = rand() % vehicles.size();
-		Vehicle a = vehicles[aPos];
-		vehicles.erase(vehicles.begin()+ aPos);
-
-		int bPos = rand() % vehicles.size();
-		Vehicle b = vehicles[bPos];
-		vehicles.erase(vehicles.begin()+ bPos);
-
-		if(a.m_fitness >= b.m_fitness)
+		std::vector<Vehicle> tournament;
+		for (int j=0;j < std::min<int>(tournamentSize, vehicles.size()); j++)
 		{
-			toCrossOver.push_back(a);
-			vehicles.push_back(b);
+			int pos = rand() % vehicles.size();
+			tournament.push_back(vehicles[pos]);
+			vehicles.erase(vehicles.begin()+ pos);
 		}
-		else
+		int best = 0;
+		for(int j=0;j<tournament.size();j++)
 		{
-			toCrossOver.push_back(b);
-			vehicles.push_back(a);
+			if(tournament[j].m_fitness > tournament[best].m_fitness)
+			{
+				best = j;
+			}
+		}
+		toCrossOver.push_back(tournament[best]);
+		tournament.erase(tournament.begin()+ best);
+
+		for(int j=0;j<tournament.size();j++)
+		{
+			vehicles.push_back(tournament[j]);
 		}
 	}
 	return toCrossOver;
