@@ -9,8 +9,19 @@
 
 GA_VEHICLE::Simulation::Simulation() : m_time(0), m_timeStep(1.0/60.0), m_render(true), m_stepsPerRenderFrame(6)
 {
-	
-	//srand(time(0));
+	time_t rawtime;
+	struct tm * timeinfo;
+	char buffer [80];
+
+	time ( &rawtime );
+	timeinfo = localtime ( &rawtime );
+
+	strftime (buffer,80,"log_%H.%M_%d-%m-%y.log",timeinfo);
+	m_log.open(buffer);
+
+	long seed = time(0);
+	m_log << "seed = " << seed << std::endl;
+	//srand(seed);
 	b2Vec2 gravity(0.0f, -10.0f);
 	bool doSleep = true;
 	m_world = new b2World(gravity, doSleep);
@@ -37,6 +48,7 @@ GA_VEHICLE::Simulation::Simulation() : m_time(0), m_timeStep(1.0/60.0), m_render
 
 	glfwSetTime(0);
 	mainLoop();
+	m_log.close();
 }
 
 GA_VEHICLE::Simulation::~Simulation()
