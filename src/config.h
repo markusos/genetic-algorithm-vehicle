@@ -11,7 +11,7 @@ namespace GA_VEHICLE
 		//static void LoadFromFile(std::string filename);
 		//static void standardConfig();
 
-		static int mutationChance = 10; // %
+		static int mutationChance = 5; // %
 		static float mutationFactor = 0.2;
 
 		static int tournamentSize = 2;
@@ -30,7 +30,7 @@ namespace GA_VEHICLE
 		static int positionIterations = 10;
 
 		static int wheelTorqueMin = 50;
-		static int wheelTorqueMax = 3000;
+		static int wheelTorqueMax = 2000;
 
 		static int wheelSpeedMin = 2;
 		static int wheelSpeedMax = 20;
