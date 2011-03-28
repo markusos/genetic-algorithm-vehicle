@@ -193,6 +193,8 @@ void GA_VEHICLE::Simulation::addTests()
 	groundPoints.push_back(20);
 	groundPoints.push_back(22);
 	groundPoints.push_back(20);
+	groundPoints.push_back(22);
+	groundPoints.push_back(20);
 
 	//smal hill
 	groundPoints.push_back(20);
@@ -216,13 +218,24 @@ void GA_VEHICLE::Simulation::addTests()
 	groundPoints.push_back(20);
 	groundPoints.push_back(24);
 	groundPoints.push_back(20);
+	groundPoints.push_back(24);
+	groundPoints.push_back(20);
+
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
 
 	//Large jump
 	groundPoints.push_back(24);
 	groundPoints.push_back(28);
 	groundPoints.push_back(32);
-	groundPoints.push_back(38);
-	groundPoints.push_back(42);
+	groundPoints.push_back(36);
+	groundPoints.push_back(40);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+
 	groundPoints.push_back(20);
 	groundPoints.push_back(20);
 	groundPoints.push_back(20);
@@ -235,6 +248,11 @@ void GA_VEHICLE::Simulation::addTests()
 	groundPoints.push_back(2);
 	groundPoints.push_back(4);
 	groundPoints.push_back(8);
+	groundPoints.push_back(20);
+
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
 	groundPoints.push_back(20);
 
 	//two medium jumps
@@ -254,11 +272,19 @@ void GA_VEHICLE::Simulation::addTests()
 	groundPoints.push_back(30);
 	groundPoints.push_back(10);
 	groundPoints.push_back(10);
+	groundPoints.push_back(10);
+	groundPoints.push_back(10);
+	groundPoints.push_back(10);
 
 	//Hill
-	groundPoints.push_back(12);
+	groundPoints.push_back(14);
 	groundPoints.push_back(18);
 	groundPoints.push_back(22);
+
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
 
 	//Large bumbs
 	groundPoints.push_back(22);
@@ -270,6 +296,17 @@ void GA_VEHICLE::Simulation::addTests()
 	groundPoints.push_back(22);
 	groundPoints.push_back(28);
 	groundPoints.push_back(22);
+	groundPoints.push_back(28);
+	groundPoints.push_back(22);
+
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(22);
+	groundPoints.push_back(24);
 
 	//Larger bumps
 	groundPoints.push_back(28);
@@ -280,12 +317,26 @@ void GA_VEHICLE::Simulation::addTests()
 	groundPoints.push_back(30);
 	groundPoints.push_back(36);
 	groundPoints.push_back(30);
+	groundPoints.push_back(36);
+	groundPoints.push_back(30);
+	groundPoints.push_back(36);
+	groundPoints.push_back(30);
+
+	groundPoints.push_back(30);
+	groundPoints.push_back(30);
+	groundPoints.push_back(30);
+	groundPoints.push_back(30);
 
 	//jump
 	groundPoints.push_back(30);
 	groundPoints.push_back(36);
 	groundPoints.push_back(42);
 	groundPoints.push_back(10);
+	groundPoints.push_back(20);
+
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
 	groundPoints.push_back(20);
 
 	//Hill
@@ -299,6 +350,13 @@ void GA_VEHICLE::Simulation::addTests()
 	groundPoints.push_back(38);
 	groundPoints.push_back(32);
 	groundPoints.push_back(26);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
 	groundPoints.push_back(20);
 
 	//Double U pit
@@ -315,8 +373,18 @@ void GA_VEHICLE::Simulation::addTests()
 	groundPoints.push_back(4);
 	groundPoints.push_back(8);
 	groundPoints.push_back(20);
+
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
 	
 	//tree jumps
+	groundPoints.push_back(20);
 	groundPoints.push_back(20);
 	groundPoints.push_back(22);
 	groundPoints.push_back(24);
@@ -346,7 +414,28 @@ void GA_VEHICLE::Simulation::addTests()
 	groundPoints.push_back(22);
 	groundPoints.push_back(20);
 
+
 	//End
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
+	groundPoints.push_back(20);
 	groundPoints.push_back(100);
 
 
@@ -365,42 +454,6 @@ void GA_VEHICLE::Simulation::initRandomPopulation()
 	{
 		m_population.push_back(Vehicle(m_world, 0, 2));
 	}
-	
-	/*
-	std::vector<VehicleVertex> vertices;
-	vertices.push_back(VehicleVertex(0,5,0));
-	vertices.push_back(VehicleVertex(0,7,pi/4));
-	vertices.push_back(VehicleVertex(0,3,pi/2));
-	vertices.push_back(VehicleVertex(0,7,3*pi/4));
-	vertices.push_back(VehicleVertex(0,5,pi));
-	vertices.push_back(VehicleVertex(0,1,-pi/2));
-	std::vector<Wheel> wheels;
-	wheels.push_back(Wheel(-pi/4,-5,300,0,2));
-	wheels.push_back(Wheel(-3*pi/4,-5,300,4,2));
-	wheels.push_back(Wheel(-pi/4,-5,300,5,1.3));
-	wheels.push_back(Wheel(-3*pi/4,-5,300,5,1.3));
-
-	Vehicle vehicle = Vehicle(m_world, 0,vertices,wheels);
-	m_population.push_back(vehicle);
-	
-	std::vector<VehicleVertex> vertices2;
-	vertices2.push_back(VehicleVertex(0,5,0));
-	vertices2.push_back(VehicleVertex(0,3,pi/4));
-	vertices2.push_back(VehicleVertex(0,5,pi/2));
-	vertices2.push_back(VehicleVertex(0,3,3*pi/4));
-	vertices2.push_back(VehicleVertex(0,5,pi));
-	vertices2.push_back(VehicleVertex(0,1,-pi/2));
-	std::vector<Wheel> wheels2;
-	wheels2.push_back(Wheel(-pi/4,-5,300,0,2));
-	wheels2.push_back(Wheel(-3*pi/4,-5,300,4,2));
-	//wheels2.push_back(Wheel(-pi/4,-5,300,5,1.3));
-	//wheels2.push_back(Wheel(-3*pi/4,-5,300,5,1.3));
-
-	Vehicle vehicle2 = Vehicle(m_world, 0,vertices2,wheels2);
-	m_population.push_back(vehicle2);
-
-	
-	*/
 	m_population[0].addToWorld();
 }
 
@@ -503,73 +556,6 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Ve
 				{
 					genome[j].value = (Config::get()->wheelTorqueMax-Config::get()->wheelTorqueMin)*Config::get()->random01()+Config::get()->wheelTorqueMin;
 				}
-				/*
-				if(rand()%2 == 1)
-				{
-					
-					if(genome[j].type == Chromosome::POINTDISTANCE)
-					{
-						genome[j].value += mutationFactor*(verticeMaxLength-verticeMinLength)*(rand()%100+1)/100.0;
-						if(genome[j].value > verticeMaxLength) genome[j].value = verticeMaxLength;
-					}
-					else if(genome[j].type == Chromosome::WHEELSIZE)
-					{
-						genome[j].value += mutationFactor*(wheelMaxSize-wheelMinSize)*(rand()%100+1)/100.0;
-						if(genome[j].value > wheelMaxSize) genome[j].value = wheelMaxSize;
-					}
-					else if(genome[j].type == Chromosome::WHEELANGLE)
-					{
-						genome[j].value += mutationFactor*(2*b2_pi)*(rand()%100+1)/100.0;
-					}
-					else if(genome[j].type == Chromosome::WHEELPOS)
-					{
-						genome[j].value += std::min(mutationFactor*(verticeCount)*(rand()%100+1)/100.0,1.0);
-						if(genome[j].value >= verticeCount) genome[j].value = verticeCount-1;
-					}
-					else if(genome[j].type == Chromosome::WHEELSPEED)
-					{
-						genome[j].value += mutationFactor*(wheelSpeedMax-wheelSpeedMin)*(rand()%100+1)/100.0;
-						if(genome[j].value > wheelSpeedMax) genome[j].value = wheelSpeedMin;
-					}
-					else if(genome[j].type == Chromosome::WHEELTORQUE)
-					{
-						genome[j].value += mutationFactor*(wheelTorqueMax-wheelTorqueMin)*(rand()%100+1)/100.0;
-						if(genome[j].value > wheelTorqueMax) genome[j].value = wheelTorqueMax;
-					}
-					
-				}
-				else
-				{
-					if(genome[j].type == Chromosome::POINTDISTANCE)
-					{
-						genome[j].value -= mutationFactor*(verticeMaxLength-verticeMinLength)*(rand()%100+1)/100.0;
-						if(genome[j].value < verticeMinLength) genome[j].value = verticeMinLength;
-					}
-					else if(genome[j].type == Chromosome::WHEELSIZE)
-					{
-						genome[j].value -= mutationFactor*(wheelMaxSize-wheelMinSize)*(rand()%100+1)/100.0;
-						if(genome[j].value < wheelMinSize) genome[j].value = wheelMinSize;
-					}
-					else if(genome[j].type == Chromosome::WHEELANGLE)
-					{
-						genome[j].value -= mutationFactor*(2*b2_pi)*(rand()%100+1)/100.0;
-					}
-					else if(genome[j].type == Chromosome::WHEELPOS)
-					{
-						genome[j].value -= std::min(mutationFactor*(verticeCount)*(rand()%100+1)/100.0,1.0);
-						if(genome[j].value < 0) genome[j].value = 0;
-					}
-					else if(genome[j].type == Chromosome::WHEELSPEED)
-					{
-						genome[j].value -= mutationFactor*(wheelSpeedMax-wheelSpeedMin)*(rand()%100+1)/100.0;
-						if(genome[j].value < wheelSpeedMin) genome[j].value = wheelSpeedMin;
-					}
-					else if(genome[j].type == Chromosome::WHEELTORQUE)
-					{
-						genome[j].value -= mutationFactor*(wheelTorqueMax-wheelTorqueMin)*(rand()%100+1)/100.0;
-						if(genome[j].value < wheelTorqueMin) genome[j].value = wheelTorqueMin;
-					}
-				}*/
 			}
 		}
 		newVehicles.push_back(Vehicle(m_world,genome));
