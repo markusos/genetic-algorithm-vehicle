@@ -7,7 +7,7 @@ GA_VEHICLE::Config::Config()
 	unsigned int seed = 0;
 	gen.seed(seed);
 
-	mutationChance = 3;
+	mutationChance = 0.03;
 	mutationFactor = 1.0;
 
 	tournamentSize = 2;
@@ -16,7 +16,7 @@ GA_VEHICLE::Config::Config()
 	populationSize = 20;
 
 	verticeMinLength = 0.5; 
-	verticeMaxLength = 10;
+	verticeMaxLength = 7;
 	verticeCount = 8;
 
 	wheelMinSize = 1; 

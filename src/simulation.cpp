@@ -415,7 +415,7 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::selection(std::vector<V
 		std::vector<Vehicle> tournament;
 		for (int j=0;j < std::min<int>(Config::get()->tournamentSize, vehicles.size()); j++)
 		{
-			int pos = rand() % vehicles.size();
+			int pos = Config::get()->randomInInterval(0,vehicles.size()-1);
 			tournament.push_back(vehicles[pos]);
 			vehicles.erase(vehicles.begin()+ pos);
 		}
@@ -450,7 +450,7 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::crossOver(std::vector<V
 
 		if (a.size() == b.size())
 		{
-			int split = rand()%(a.size()-1)+1;
+			int split = Config::get()->randomInInterval(1,a.size()-1);
 			for (int j = 0; j < a.size(); j++)
 			{
 				if (j >= split)
@@ -477,31 +477,31 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Ve
 		std::vector<Chromosome> genome = vehicles[i].getGenome();
 		for(int j=0;j<genome.size();j++)
 		{
-			if(rand()%100 <=Config::get()->mutationChance)
+			if(Config::get()->random01() <= Config::get()->mutationChance)
 			{
 				if(genome[j].type == Chromosome::POINTDISTANCE)
 				{
-					genome[j].value = (Config::get()->verticeMaxLength-Config::get()->verticeMinLength)*(rand()/(float)(RAND_MAX+1))+Config::get()->verticeMinLength;
+					genome[j].value = (Config::get()->verticeMaxLength-Config::get()->verticeMinLength)*Config::get()->random01()+Config::get()->verticeMinLength;
 				}
 				else if(genome[j].type == Chromosome::WHEELSIZE)
 				{
-					genome[j].value = (Config::get()->wheelMaxSize-Config::get()->wheelMinSize)*(rand()/(float)(RAND_MAX+1))+Config::get()->wheelMinSize;
+					genome[j].value = (Config::get()->wheelMaxSize-Config::get()->wheelMinSize)*Config::get()->random01()+Config::get()->wheelMinSize;
 				}
 				else if(genome[j].type == Chromosome::WHEELANGLE)
 				{
-					genome[j].value = (2*b2_pi)*(rand()/(float)(RAND_MAX+1));
+					genome[j].value = (2*b2_pi)*Config::get()->random01();
 				}
 				else if(genome[j].type == Chromosome::WHEELPOS)
 				{
-					genome[j].value = (Config::get()->verticeCount)*(rand()/(float)(RAND_MAX+1));
+					genome[j].value = (Config::get()->verticeCount)*Config::get()->random01();
 				}
 				else if(genome[j].type == Chromosome::WHEELSPEED)
 				{
-					genome[j].value = (Config::get()->wheelSpeedMax-Config::get()->wheelSpeedMin)*(rand()/(float)(RAND_MAX+1))+Config::get()->wheelSpeedMin;
+					genome[j].value = (Config::get()->wheelSpeedMax-Config::get()->wheelSpeedMin)*Config::get()->random01()+Config::get()->wheelSpeedMin;
 				}
 				else if(genome[j].type == Chromosome::WHEELTORQUE)
 				{
-					genome[j].value = (Config::get()->wheelTorqueMax-Config::get()->wheelTorqueMin)*(rand()/(float)(RAND_MAX+1))+Config::get()->wheelTorqueMin;
+					genome[j].value = (Config::get()->wheelTorqueMax-Config::get()->wheelTorqueMin)*Config::get()->random01()+Config::get()->wheelTorqueMin;
 				}
 				/*
 				if(rand()%2 == 1)

@@ -13,18 +13,18 @@ GA_VEHICLE::Vehicle::Vehicle(b2World* world, float mainPointsDistance, int nrOfW
 
 	for(double i = 0; i < 2*b2_pi; i = i + b2_pi/4)
 	{
-		float sideLength = rand()/(double(RAND_MAX) + 1) * 4 + 1;
+		float sideLength = Config::get()->random01() * (Config::get()->verticeMaxLength-Config::get()->verticeMinLength) + Config::get()->verticeMinLength;
 		m_vertices.push_back(VehicleVertex(0,sideLength,i));
 	}	
 
 	for(int i = 0; i < nrOfWheels; i++)
 	{
 
-		float wheelAngle = rand()/(double(RAND_MAX) + 1) * b2_pi * 2;
-		int wheelPos = rand()%8;
-		float wheelSize = rand()/(double(RAND_MAX) + 1) * (Config::get()->wheelMaxSize - Config::get()->wheelMinSize)  + Config::get()->wheelMinSize;
-		float torque = rand()%(Config::get()->wheelTorqueMax - Config::get()->wheelTorqueMin) + Config::get()->wheelTorqueMin;
-		float speed = rand()%(Config::get()->wheelSpeedMax - Config::get()->wheelSpeedMin)  + Config::get()->wheelSpeedMin;
+		float wheelAngle = Config::get()->random01() * b2_pi * 2;
+		int wheelPos = Config::get()->randomInInterval(0,7);
+		float wheelSize = Config::get()->random01() * (Config::get()->wheelMaxSize - Config::get()->wheelMinSize)  + Config::get()->wheelMinSize;
+		float torque = Config::get()->random01()*(Config::get()->wheelTorqueMax - Config::get()->wheelTorqueMin) + Config::get()->wheelTorqueMin;
+		float speed = Config::get()->random01()*(Config::get()->wheelSpeedMax - Config::get()->wheelSpeedMin)  + Config::get()->wheelSpeedMin;
 		
 		m_wheels.push_back(Wheel(wheelAngle,-speed,torque,wheelPos,wheelSize));
 	}
@@ -180,7 +180,7 @@ void GA_VEHICLE::Vehicle::addToWorld()
 
 	b2PolygonShape vehicleShape;
 	b2FixtureDef vehicleFixtureDef;
-	vehicleFixtureDef.friction = 10.0f;
+	vehicleFixtureDef.friction = 15.0f;
 	vehicleFixtureDef.density = 1.0f;
 	for(int i=0;i<m_vertices.size();i++)
 	{
