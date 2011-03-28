@@ -18,7 +18,7 @@ namespace GA_VEHICLE
 		int randomInInterval(int lowerBound, int upperBound);
 		double random01();
 
-		int mutationChance; // %
+		float mutationChance;
 		float mutationFactor;
 
 		int tournamentSize;
