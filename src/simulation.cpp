@@ -7,7 +7,7 @@
 #include <Box2D\Common\b2Settings.h>
 #include <time.h>
 
-GA_VEHICLE::Simulation::Simulation() : m_time(0), m_timeStep(1.0/60.0), m_render(true), m_stepsPerRenderFrame(6)
+GA_VEHICLE::Simulation::Simulation() : m_time(0), m_timeStep(1.0/60.0), m_render(false), m_stepsPerRenderFrame(6)
 {
 	time_t rawtime;
 	struct tm * timeinfo;
@@ -30,19 +30,15 @@ GA_VEHICLE::Simulation::Simulation() : m_time(0), m_timeStep(1.0/60.0), m_render
 	m_stepsStillForThisVehicle = 0;
 	addTests();
 
-	if(m_render)
-	{
-		m_renderer = new Renderer(m_world);
-		uint32 flags = 0;
-		flags += b2DebugDraw::e_shapeBit;
-		flags += b2DebugDraw::e_jointBit;
-		//flags += b2DebugDraw::e_aabbBit;
-		//flags += b2DebugDraw::e_pairBit;
-		//flags += b2DebugDraw::e_centerOfMassBit;
-		m_renderer->SetFlags(flags);
-		m_world->SetDebugDraw(m_renderer);
-
-	}
+	m_renderer = new Renderer(m_world);
+	uint32 flags = 0;
+	flags += b2DebugDraw::e_shapeBit;
+	flags += b2DebugDraw::e_jointBit;
+	//flags += b2DebugDraw::e_aabbBit;
+	//flags += b2DebugDraw::e_pairBit;
+	//flags += b2DebugDraw::e_centerOfMassBit;
+	m_renderer->SetFlags(flags);
+	m_world->SetDebugDraw(m_renderer);
 
 	initRandomPopulation();
 
@@ -146,7 +142,10 @@ void GA_VEHICLE::Simulation::mainLoop()
 				std::cout << "abort == true, generation == "<< m_generationCounter <<" fitness == "<< m_population[m_currentVehicle].m_fitness<< std::endl;
 				////////////////////////////////////////////////////////
 				//Testkod
-				//if(m_population[m_currentVehicle].m_fitness > 1200) m_currentVehicle--;
+				if(m_population[m_currentVehicle].m_fitness > 2200){
+					running = false;
+					return;
+				}
 				/////////////////////////////////////////////////////////
 				m_population[m_currentVehicle].removeFromWorld();
 				m_currentVehicle++;
