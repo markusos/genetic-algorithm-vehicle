@@ -17,15 +17,18 @@ GA_VEHICLE::Simulation::Simulation() : m_time(0), m_timeStep(1.0/60.0), m_render
 	m_stepsStillForThisVehicle = 0;
 	addTests();
 
-	m_renderer = new Renderer(m_world);
-	uint32 flags = 0;
-	flags += b2DebugDraw::e_shapeBit;
-	flags += b2DebugDraw::e_jointBit;
-	//flags += b2DebugDraw::e_aabbBit;
-	//flags += b2DebugDraw::e_pairBit;
-	//flags += b2DebugDraw::e_centerOfMassBit;
-	m_renderer->SetFlags(flags);
-	m_world->SetDebugDraw(m_renderer);
+	if(Config::get()->display)
+	{
+		m_renderer = new Renderer(m_world);
+		uint32 flags = 0;
+		flags += b2DebugDraw::e_shapeBit;
+		flags += b2DebugDraw::e_jointBit;
+		//flags += b2DebugDraw::e_aabbBit;
+		//flags += b2DebugDraw::e_pairBit;
+		//flags += b2DebugDraw::e_centerOfMassBit;
+		m_renderer->SetFlags(flags);
+		m_world->SetDebugDraw(m_renderer);
+	}
 
 	initRandomPopulation();
 
@@ -79,18 +82,21 @@ void GA_VEHICLE::Simulation::mainLoop()
 	bool running = true;
 	while (running)
 	{
-		if (glfwGetKey(GLFW_KEY_ESC) || !glfwGetWindowParam(GLFW_OPENED) )
+		if(Config::get()->display)
 		{
-			running = false;
-		}
+			if (glfwGetKey(GLFW_KEY_ESC) || !glfwGetWindowParam(GLFW_OPENED) )
+			{
+				running = false;
+			}
 
-		if (glfwGetKey('R'))
-		{
-			m_render = true;
-		}
-		else if (glfwGetKey('T'))
-		{
-			m_render = false;
+			if (glfwGetKey('R'))
+			{
+				m_render = true;
+			}
+			else if (glfwGetKey('T'))
+			{
+				m_render = false;
+			}
 		}
 
 		if(m_currentVehicle >= m_population.size())
@@ -124,7 +130,7 @@ void GA_VEHICLE::Simulation::mainLoop()
 
 		if(stepPhysics()) // physics "stepped"
 		{
-			if(m_render)
+			if(m_render && Config::get()->display)
 			{
 				render();
 			}
@@ -144,7 +150,10 @@ void GA_VEHICLE::Simulation::mainLoop()
 					m_stepsStillForThisVehicle = 0;
 				}
 			}
-			glfwSwapBuffers();// otherwise keyboard etc wont work..
+			if(Config::get()->display)
+			{
+				glfwSwapBuffers();// otherwise keyboard etc wont work..
+			}
 		}
 	}
 }

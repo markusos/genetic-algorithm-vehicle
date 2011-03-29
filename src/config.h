@@ -19,6 +19,7 @@ namespace GA_VEHICLE
 		int randomInInterval(int lowerBound, int upperBound);
 		double random01();
 
+		bool display;
 		int splitPoints;
 
 		float mutationChance;

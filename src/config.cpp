@@ -13,7 +13,7 @@ GA_VEHICLE::Config::Config()
 
 	gen.seed(seed);
 
-	in >> splitPoints >> mutationChance >> tournamentSize >> toCrossOverSize >> populationSize >> verticeMinLength 
+	in >> display >> splitPoints >> mutationChance >> tournamentSize >> toCrossOverSize >> populationSize >> verticeMinLength 
 	   >> verticeMaxLength >> verticeCount >> wheelMinSize >> wheelMaxSize >> velocityIterations >> positionIterations 
 	   >> wheelTorqueMin >> wheelTorqueMax >> wheelSpeedMin >> wheelSpeedMax >> allowedStandStillSteps >> minMove;
 
@@ -26,7 +26,7 @@ GA_VEHICLE::Config::Config()
 	time ( &rawtime );
 	timeinfo = localtime ( &rawtime );
 
-	strftime (buffer,80,"log_%H.%M_%d-%m-%y.log",timeinfo);
+	strftime (buffer,80,"log_%H.%M.%S_%d-%m-%y.log",timeinfo);
 	m_log.open(buffer);
 
 	/*
