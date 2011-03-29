@@ -20,7 +20,6 @@ GA_VEHICLE::Config::Config()
 	splitPoints = 2;
 
 	mutationChance = 0.03;
-	mutationFactor = 1.0;
 
 	tournamentSize = 2;
 	toCrossOverSize = 10;
@@ -46,10 +45,10 @@ GA_VEHICLE::Config::Config()
 	allowedStandStillSteps = 500; // 60/sec
 	minMove = 5;
 
+	m_log << "seed = " << seed << std::endl;
 	m_log << "splitPoints =" << splitPoints << std::endl;
 
 	m_log << "mutationChance =" << mutationChance << std::endl;
-	m_log << "mutationFactor =" << mutationFactor << std::endl;
 
 	m_log << "tournamentSize =" << tournamentSize << std::endl;
 	m_log << "toCrossOverSize =" << toCrossOverSize << std::endl;
@@ -75,7 +74,6 @@ GA_VEHICLE::Config::Config()
 	m_log << "allowedStandStillSteps =" << allowedStandStillSteps << std::endl;
 	m_log << "minMove =" << minMove << std::endl;
 
-	m_log << "seed = " << seed << std::endl;
 	m_log << "Generation Mean_value Max" << std::endl;
 }
 GA_VEHICLE::Config* GA_VEHICLE::Config::get()
@@ -90,7 +88,19 @@ GA_VEHICLE::Config* GA_VEHICLE::Config::get()
 
 void GA_VEHICLE::Config::LoadFromFile(std::string filename)
 {
+	std::ifstream in;
 
+	in.open (filename, std::ifstream::in);
+	
+	unsigned int seed;
+	in >> seed;
+	if(seed != 0) gen.seed(seed);
+
+	in >> splitPoints >> mutationChance >> tournamentSize >> toCrossOverSize >> populationSize >> verticeMinLength 
+	   >> verticeMaxLength >> verticeCount >> wheelMinSize >> wheelMaxSize >> velocityIterations >> positionIterations 
+	   >> wheelTorqueMin >> wheelTorqueMax >> wheelSpeedMin >> wheelSpeedMax >> allowedStandStillSteps >> minMove;
+
+	in.close();
 }
 
 int GA_VEHICLE::Config::randomInInterval(int lowerBound, int upperBound)
