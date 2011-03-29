@@ -21,7 +21,11 @@ namespace GA_VEHICLE
 		void addTests();
 		void initRandomPopulation();
 		std::vector<Vehicle> selection(std::vector<Vehicle> vehicles);
+		
 		std::vector<Vehicle> crossOver(std::vector<Vehicle> vehicles);
+		std::vector<Vehicle> OnePointCrossOver(std::vector<Vehicle> vehicles);
+		std::vector<Vehicle> TwoPointCrossOver(std::vector<Vehicle> vehicles);
+
 		std::vector<Vehicle> mutation(std::vector<Vehicle> vehicles);
 		bool evaluateVehicleAbortCondition(Vehicle& vehicle);
 

@@ -17,6 +17,8 @@ GA_VEHICLE::Config::Config()
 	strftime (buffer,80,"log_%H.%M_%d-%m-%y.log",timeinfo);
 	m_log.open(buffer);
 
+	splitPoints = 2;
+
 	mutationChance = 0.03;
 	mutationFactor = 1.0;
 
@@ -43,6 +45,8 @@ GA_VEHICLE::Config::Config()
 
 	allowedStandStillSteps = 500; // 60/sec
 	minMove = 5;
+
+	m_log << "splitPoints =" << splitPoints << std::endl;
 
 	m_log << "mutationChance =" << mutationChance << std::endl;
 	m_log << "mutationFactor =" << mutationFactor << std::endl;

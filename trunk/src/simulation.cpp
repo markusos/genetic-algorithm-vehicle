@@ -478,33 +478,9 @@ std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::selection(std::vector<V
 
 std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::crossOver(std::vector<Vehicle> vehicles)
 {
-
-	std::vector<Vehicle> newVehicles;
-
-	for (int i = 0; i < vehicles.size(); i++)
-	{
-		std::vector<Chromosome> a = vehicles[i].getGenome();
-		std::vector<Chromosome> b = vehicles[(i+2)%vehicles.size()].getGenome();
-
-		if (a.size() == b.size())
-		{
-			int split = Config::get()->randomInInterval(1,a.size()-1);
-			for (int j = 0; j < a.size(); j++)
-			{
-				if (j >= split)
-				{
-					Chromosome temp = a[j];
-					a[j] = b[j];
-					b[j] = temp;
-				}
-			}
-			newVehicles.push_back(Vehicle(m_world,a));
-			newVehicles.push_back(Vehicle(m_world,b));
-		}
-		else std::cout << "ERROR: Genomes of different size" << std::endl;
-	}
-
-	return newVehicles;
+	if(Config::get()->splitPoints == 1) return OnePointCrossOver(vehicles);
+	else if (Config::get()->splitPoints == 2) return TwoPointCrossOver(vehicles);
+	else std::cout << "ERROR: Not correct number of splitpoints" << std::endl;
 }
 
 std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::mutation(std::vector<Vehicle> vehicles)
@@ -574,4 +550,76 @@ bool GA_VEHICLE::Simulation::evaluateVehicleAbortCondition(Vehicle& vehicle)
 	else{
 		return false;
 	}
+}
+
+
+
+std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::OnePointCrossOver(std::vector<Vehicle> vehicles)
+{
+	std::vector<Vehicle> newVehicles;
+
+	for (int i = 0; i < vehicles.size(); i++)
+	{
+		std::vector<Chromosome> a = vehicles[i].getGenome();
+		std::vector<Chromosome> b = vehicles[(i+2)%vehicles.size()].getGenome();
+
+		if (a.size() == b.size())
+		{
+			int split = Config::get()->randomInInterval(1,a.size()-1);
+			for (int j = 0; j < a.size(); j++)
+			{
+				if (j >= split)
+				{
+					Chromosome temp = a[j];
+					a[j] = b[j];
+					b[j] = temp;
+				}
+			}
+			newVehicles.push_back(Vehicle(m_world,a));
+			newVehicles.push_back(Vehicle(m_world,b));
+		}
+		else std::cout << "ERROR: Genomes of different size" << std::endl;
+	}
+
+	return newVehicles;
+}
+
+
+std::vector<GA_VEHICLE::Vehicle> GA_VEHICLE::Simulation::TwoPointCrossOver(std::vector<Vehicle> vehicles){
+
+	std::vector<Vehicle> newVehicles;
+
+	for (int i = 0; i < vehicles.size(); i++)
+	{
+		std::vector<Chromosome> a = vehicles[i].getGenome();
+		std::vector<Chromosome> b = vehicles[(i+2)%vehicles.size()].getGenome();
+
+		if (a.size() == b.size())
+		{
+			int split1 = Config::get()->randomInInterval(1,a.size()-1);
+			int split2 = Config::get()->randomInInterval(1,a.size()-1);
+
+			if (split1 > split2){
+				int tmp = split1;
+				split1 = split2;
+				split2 = tmp;
+			}		
+
+			for (int j = 0; j < a.size(); j++)
+			{
+				if (j >= split1 && j <= split2)
+				{
+					Chromosome temp = a[j];
+					a[j] = b[j];
+					b[j] = temp;
+				}
+			}
+			newVehicles.push_back(Vehicle(m_world,a));
+			newVehicles.push_back(Vehicle(m_world,b));
+		}
+		else std::cout << "ERROR: Genomes of different size" << std::endl;
+	}
+
+	return newVehicles;
+
 }
