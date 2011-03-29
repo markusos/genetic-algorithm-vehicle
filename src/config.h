@@ -23,7 +23,6 @@ namespace GA_VEHICLE
 		int splitPoints;
 
 		float mutationChance;
-		float mutationFactor;
 
 		int tournamentSize;
 		int toCrossOverSize;
