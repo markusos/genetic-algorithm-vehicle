@@ -3,9 +3,22 @@
 
 GA_VEHICLE::Config::Config()
 {
-	//unsigned int seed = time(0);
-	unsigned int seed = 0;
+	unsigned int seed = time(0);
+	//unsigned int seed = 0;
 	gen.seed(seed);
+
+	time_t rawtime;
+	struct tm * timeinfo;
+	char buffer [80];
+
+	time ( &rawtime );
+	timeinfo = localtime ( &rawtime );
+
+	strftime (buffer,80,"log_%H.%M_%d-%m-%y.log",timeinfo);
+	m_log.open(buffer);
+
+	m_log << "seed = " << seed << std::endl;
+	m_log << "Generation Mean_value Max" << std::endl;
 
 	mutationChance = 0.03;
 	mutationFactor = 1.0;
