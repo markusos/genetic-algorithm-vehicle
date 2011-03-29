@@ -96,7 +96,7 @@ void GA_VEHICLE::Simulation::mainLoop()
 	bool running = true;
 	while (running)
 	{
-		if (glfwGetKey(GLFW_KEY_ESC) || (m_render &&!glfwGetWindowParam(GLFW_OPENED)) )
+		if (glfwGetKey(GLFW_KEY_ESC) || !glfwGetWindowParam(GLFW_OPENED) )
 		{
 			running = false;
 		}
