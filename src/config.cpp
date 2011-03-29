@@ -17,9 +17,6 @@ GA_VEHICLE::Config::Config()
 	strftime (buffer,80,"log_%H.%M_%d-%m-%y.log",timeinfo);
 	m_log.open(buffer);
 
-	m_log << "seed = " << seed << std::endl;
-	m_log << "Generation Mean_value Max" << std::endl;
-
 	mutationChance = 0.03;
 	mutationFactor = 1.0;
 
@@ -46,6 +43,36 @@ GA_VEHICLE::Config::Config()
 
 	allowedStandStillSteps = 500; // 60/sec
 	minMove = 5;
+
+	m_log << "mutationChance =" << mutationChance << std::endl;
+	m_log << "mutationFactor =" << mutationFactor << std::endl;
+
+	m_log << "tournamentSize =" << tournamentSize << std::endl;
+	m_log << "toCrossOverSize =" << toCrossOverSize << std::endl;
+
+	m_log << "populationSize =" << populationSize << std::endl;
+
+	m_log << "verticeMinLength =" << verticeMinLength << std::endl;
+	m_log << "verticeMaxLength =" << verticeMaxLength << std::endl;
+	m_log << "verticeCount =" << verticeCount << std::endl;
+
+	m_log << "wheelMinSize =" << wheelMinSize << std::endl;
+	m_log << "wheelMaxSize =" << wheelMaxSize << std::endl;
+
+	m_log << "velocityIterations =" << velocityIterations << std::endl;
+	m_log << "positionIterations =" << positionIterations << std::endl;
+
+	m_log << "wheelTorqueMin =" << wheelTorqueMin << std::endl;
+	m_log << "wheelTorqueMax =" << wheelTorqueMax << std::endl;
+
+	m_log << "wheelSpeedMin =" << wheelSpeedMin << std::endl;
+	m_log << "wheelSpeedMax =" << wheelSpeedMax << std::endl;
+
+	m_log << "allowedStandStillSteps =" << allowedStandStillSteps << std::endl;
+	m_log << "minMove =" << minMove << std::endl;
+
+	m_log << "seed = " << seed << std::endl;
+	m_log << "Generation Mean_value Max" << std::endl;
 }
 GA_VEHICLE::Config* GA_VEHICLE::Config::get()
 {
