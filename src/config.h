@@ -6,6 +6,8 @@
 #include <boost/random/uniform_int.hpp>
 #include <boost/random/variate_generator.hpp>
 #include <boost/random/uniform_01.hpp>
+#include <iostream>
+#include <fstream>
 
 namespace GA_VEHICLE
 {
@@ -43,7 +45,8 @@ namespace GA_VEHICLE
 		int wheelSpeedMax;
 		long allowedStandStillSteps; // 60/sec
 		float minMove;
-		
+
+		std::ofstream m_log;
 	private:
 		Config();
 		boost::mt19937 gen;

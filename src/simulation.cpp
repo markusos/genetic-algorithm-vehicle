@@ -3,24 +3,11 @@
 #include <GL/glfw.h>
 #include <GL/glut.h>
 
-#include <iostream>
 #include <Box2D\Common\b2Settings.h>
 #include <time.h>
 
 GA_VEHICLE::Simulation::Simulation() : m_time(0), m_timeStep(1.0/60.0), m_render(false), m_stepsPerRenderFrame(6)
 {
-	time_t rawtime;
-	struct tm * timeinfo;
-	char buffer [80];
-
-	time ( &rawtime );
-	timeinfo = localtime ( &rawtime );
-
-	strftime (buffer,80,"log_%H.%M_%d-%m-%y.log",timeinfo);
-	m_log.open(buffer);
-
-	
-	m_log << "Generation Median Max" << std::endl;
 	
 	b2Vec2 gravity(0.0f, -10.0f);
 	bool doSleep = true;
@@ -44,7 +31,7 @@ GA_VEHICLE::Simulation::Simulation() : m_time(0), m_timeStep(1.0/60.0), m_render
 
 	glfwSetTime(0);
 	mainLoop();
-	m_log.close();
+	Config::get()->m_log.close();
 }
 
 GA_VEHICLE::Simulation::~Simulation()
@@ -108,15 +95,15 @@ void GA_VEHICLE::Simulation::mainLoop()
 
 		if(m_currentVehicle >= m_population.size())
 		{
-			float medianFitness = 0;
+			float meanValueFitness = 0;
 			float maxFitness = 0;
 			for(int i = 0; i < m_population.size(); i++)
 			{
-				medianFitness += m_population[i].m_fitness;
+				meanValueFitness += m_population[i].m_fitness;
 				if(m_population[i].m_fitness > maxFitness) maxFitness = m_population[i].m_fitness;
 			}
-			medianFitness = medianFitness/m_population.size();
-			m_log << m_generationCounter << ";" << medianFitness << ";" << maxFitness << std::endl;
+			meanValueFitness = meanValueFitness/m_population.size();
+			Config::get()->m_log << m_generationCounter << ";" << meanValueFitness << ";" << maxFitness << std::endl;
 			
 
 			m_currentVehicle = 0;

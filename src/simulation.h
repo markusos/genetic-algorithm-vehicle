@@ -5,8 +5,7 @@
 #include "Renderer.h"
 #include "vehicle.h"
 #include <vector>
-#include <iostream>
-#include <fstream>
+
 
 namespace GA_VEHICLE
 {
@@ -41,7 +40,7 @@ namespace GA_VEHICLE
 		long m_stepsStillForThisVehicle;
 		float32 oldPosX; 
 
-		std::ofstream m_log;
+		
 	};
 }
 
