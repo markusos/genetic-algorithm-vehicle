@@ -16,7 +16,6 @@ namespace GA_VEHICLE
 	
 	public:
 		static Config* get();
-		void LoadFromFile(std::string filename);
 		int randomInInterval(int lowerBound, int upperBound);
 		double random01();
 

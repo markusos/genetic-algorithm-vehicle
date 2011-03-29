@@ -3,9 +3,21 @@
 
 GA_VEHICLE::Config::Config()
 {
-	unsigned int seed = time(0);
-	//unsigned int seed = 0;
+	std::ifstream in;
+
+	in.open ("config.cfg", std::ifstream::in);
+	
+	unsigned int seed;
+	in >> seed;
+	if(seed == 0) seed = time(0);
+
 	gen.seed(seed);
+
+	in >> splitPoints >> mutationChance >> tournamentSize >> toCrossOverSize >> populationSize >> verticeMinLength 
+	   >> verticeMaxLength >> verticeCount >> wheelMinSize >> wheelMaxSize >> velocityIterations >> positionIterations 
+	   >> wheelTorqueMin >> wheelTorqueMax >> wheelSpeedMin >> wheelSpeedMax >> allowedStandStillSteps >> minMove;
+
+	in.close();
 
 	time_t rawtime;
 	struct tm * timeinfo;
@@ -17,6 +29,7 @@ GA_VEHICLE::Config::Config()
 	strftime (buffer,80,"log_%H.%M_%d-%m-%y.log",timeinfo);
 	m_log.open(buffer);
 
+	/*
 	splitPoints = 2;
 
 	mutationChance = 0.03;
@@ -44,7 +57,7 @@ GA_VEHICLE::Config::Config()
 
 	allowedStandStillSteps = 500; // 60/sec
 	minMove = 5;
-
+	*/
 	m_log << "seed = " << seed << std::endl;
 	m_log << "splitPoints =" << splitPoints << std::endl;
 
@@ -84,23 +97,6 @@ GA_VEHICLE::Config* GA_VEHICLE::Config::get()
 		instance = new Config();
 	}
 	return instance;
-}
-
-void GA_VEHICLE::Config::LoadFromFile(std::string filename)
-{
-	std::ifstream in;
-
-	in.open (filename, std::ifstream::in);
-	
-	unsigned int seed;
-	in >> seed;
-	if(seed != 0) gen.seed(seed);
-
-	in >> splitPoints >> mutationChance >> tournamentSize >> toCrossOverSize >> populationSize >> verticeMinLength 
-	   >> verticeMaxLength >> verticeCount >> wheelMinSize >> wheelMaxSize >> velocityIterations >> positionIterations 
-	   >> wheelTorqueMin >> wheelTorqueMax >> wheelSpeedMin >> wheelSpeedMax >> allowedStandStillSteps >> minMove;
-
-	in.close();
 }
 
 int GA_VEHICLE::Config::randomInInterval(int lowerBound, int upperBound)
