@@ -104,7 +104,13 @@ void GA_VEHICLE::Simulation::mainLoop()
 			}
 			meanValueFitness = meanValueFitness/m_population.size();
 			Config::get()->m_log << m_generationCounter << ";" << meanValueFitness << ";" << maxFitness << std::endl;
-			
+			////////////////////////////////////////////////////////
+				//End Test
+				if(maxFitness > 2200){
+					running = false;
+					return;
+				}
+			/////////////////////////////////////////////////////////
 
 			m_currentVehicle = 0;
 			m_generationCounter++;
@@ -127,13 +133,6 @@ void GA_VEHICLE::Simulation::mainLoop()
 				
 				m_population[m_currentVehicle].m_fitness = m_population[m_currentVehicle].m_vehicleBody->GetPosition().x;
 				std::cout << "abort == true, generation == "<< m_generationCounter <<" fitness == "<< m_population[m_currentVehicle].m_fitness<< std::endl;
-				////////////////////////////////////////////////////////
-				//Testkod
-				if(m_population[m_currentVehicle].m_fitness > 2200){
-					running = false;
-					return;
-				}
-				/////////////////////////////////////////////////////////
 				m_population[m_currentVehicle].removeFromWorld();
 				m_currentVehicle++;
 				if(m_currentVehicle < m_population.size())
